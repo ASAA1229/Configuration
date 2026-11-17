@@ -1201,11 +1201,11 @@
       "protocol": "openid-connect",
       "rootUrl": "http://127.0.0.1:8300",
       "redirectUris": [
-        "http://127.0.0.1:5173/*",
+        "http://127.0.0.1:5174/*",
         "http://127.0.0.1:8300/*"
       ],
       "webOrigins": [
-        "http://127.0.0.1:5173",
+        "http://127.0.0.1:5174",
         "http://127.0.0.1:8300"
       ],
       "attributes": {
