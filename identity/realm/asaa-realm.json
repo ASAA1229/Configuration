@@ -1,0 +1,1521 @@
+{
+  "realm": "asaa",
+  "displayName": "ASAA",
+  "enabled": true,
+  "registrationAllowed": false,
+  "registrationEmailAsUsername": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": false,
+  "editUsernameAllowed": false,
+  "verifyEmail": false,
+  "rememberMe": false,
+  "sslRequired": "external",
+  "bruteForceProtected": true,
+  "permanentLockout": false,
+  "failureFactor": 5,
+  "waitIncrementSeconds": 60,
+  "maxFailureWaitSeconds": 900,
+  "minimumQuickLoginWaitSeconds": 60,
+  "quickLoginCheckMilliSeconds": 1000,
+  "maxDeltaTimeSeconds": 43200,
+  "passwordPolicy": "length(12) and upperCase(1) and lowerCase(1) and digits(1) and specialChars(1) and notUsername(undefined) and passwordHistory(5)",
+  "otpPolicyType": "totp",
+  "otpPolicyAlgorithm": "HmacSHA1",
+  "otpPolicyDigits": 6,
+  "otpPolicyPeriod": 30,
+  "otpPolicyInitialCounter": 0,
+  "otpPolicyLookAheadWindow": 1,
+  "otpPolicyCodeReusable": false,
+  "otpSupportedApplications": [
+    "totpAppGoogleName",
+    "totpAppMicrosoftAuthenticatorName",
+    "totpAppFreeOTPName"
+  ],
+  "ssoSessionIdleTimeout": 1800,
+  "ssoSessionMaxLifespan": 36000,
+  "ssoSessionIdleTimeoutRememberMe": 1800,
+  "ssoSessionMaxLifespanRememberMe": 36000,
+  "accessTokenLifespan": 300,
+  "revokeRefreshToken": true,
+  "refreshTokenMaxReuse": 0,
+  "eventsEnabled": true,
+  "eventsExpiration": 7776000,
+  "eventsListeners": [
+    "jboss-logging"
+  ],
+  "enabledEventTypes": [
+    "LOGIN",
+    "LOGIN_ERROR",
+    "LOGOUT",
+    "LOGOUT_ERROR",
+    "UPDATE_PASSWORD",
+    "UPDATE_PASSWORD_ERROR",
+    "UPDATE_TOTP",
+    "UPDATE_TOTP_ERROR",
+    "REMOVE_TOTP",
+    "REMOVE_TOTP_ERROR",
+    "CODE_TO_TOKEN",
+    "CODE_TO_TOKEN_ERROR",
+    "REFRESH_TOKEN",
+    "REFRESH_TOKEN_ERROR",
+    "REGISTER",
+    "REGISTER_ERROR",
+    "CLIENT_LOGIN",
+    "CLIENT_LOGIN_ERROR",
+    "IDENTITY_PROVIDER_LOGIN",
+    "IDENTITY_PROVIDER_LOGIN_ERROR",
+    "RESET_PASSWORD",
+    "RESET_PASSWORD_ERROR"
+  ],
+  "adminEventsEnabled": true,
+  "adminEventsDetailsEnabled": true,
+  "requiredActions": [
+    {
+      "alias": "CONFIGURE_TOTP",
+      "name": "Configure OTP",
+      "providerId": "CONFIGURE_TOTP",
+      "enabled": true,
+      "defaultAction": true,
+      "priority": 10,
+      "config": {}
+    }
+  ],
+  "defaultRoles": [
+    "default-roles-asaa"
+  ],
+  "roles": {
+    "realm": [
+      {
+        "name": "ar:customer:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "ar:customer:write",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "ar:invoice:issue",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "ar:invoice:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "ar:invoice:write",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "ar:receipt:allocate",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "ar:receipt:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "ar:receipt:write",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "audit:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "authorization:assignment:approve",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "authorization:assignment:create",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "authorization:assignment:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "authorization:assignment:revoke",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "authorization:role:approve",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "authorization:role:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "authorization:role:write",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "expense:claim:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "expense:claim:read:all",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "expense:claim:reimburse",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "expense:claim:review",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "expense:claim:submit",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "expense:claim:write",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "governance:decision:approve",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "governance:decision:create",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "governance:decision:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "governance:decision:reject",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "governance:delegation:approve",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "governance:delegation:create",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "governance:delegation:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "governance:delegation:reject",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "governance:delegation:revoke",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "hr:asset:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "hr:asset:write",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "hr:document:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "hr:document:write",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "hr:employee:lifecycle",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "hr:employee:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "hr:employee:write",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "hr:employment:write",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "hr:exit:complete",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "hr:exit:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "hr:exit:write",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "hr:leave:policy:approve",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "hr:leave:policy:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "hr:leave:policy:write",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "hr:leave:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "hr:leave:request",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "hr:leave:review",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "identity:access-review:create",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "identity:access-review:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "identity:access-review:review",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "identity:link:write",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "identity:sync:enqueue",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "identity:sync:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "identity:sync:reconcile",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "identity:sync:run",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "masterdata:domain:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "masterdata:domain:write",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "masterdata:record:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "masterdata:record:supersede",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "masterdata:record:write",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "notification:outbox:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "notification:process",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "notification:send",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "notification:template:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "notification:template:write",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "onboarding:assignment:write",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "onboarding:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "onboarding:task:assign",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "onboarding:task:update",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "onboarding:template:write",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "ops:backup:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "ops:status:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "organization:profile:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "organization:profile:write",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "organization:structure:approve",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "organization:structure:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "organization:structure:write",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "payroll:accounting:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "payroll:compensation:approve",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "payroll:compensation:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "payroll:compensation:write",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "payroll:entry:write",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "payroll:period:close",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "payroll:period:write",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "payroll:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "payroll:run:approve",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "payroll:run:close",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "payroll:run:submit",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "payroll:run:write",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "procurement:request:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "procurement:request:read:all",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "procurement:request:review",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "procurement:request:submit",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "procurement:request:write",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "register:budget:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "supplier:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "supplier:status",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "supplier:verify",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "supplier:write",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "tms:timesheet:read",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "tms:timesheet:read:all",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "tms:timesheet:review",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "tms:timesheet:submit",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "tms:timesheet:write",
+        "description": "ASAA permission (from apps/ap-api source)",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "system:identity-sync",
+        "description": "ASAA system permission for service accounts. Not granted to people.",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "system:notifications",
+        "description": "ASAA system permission for service accounts. Not granted to people.",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "offline_access",
+        "description": "Keycloak built-in realm role used by default-roles-asaa",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "uma_authorization",
+        "description": "Keycloak built-in realm role used by default-roles-asaa",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "jarvis-owner",
+        "description": "JARVIS device enrollment owner",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "portfolio-admin",
+        "description": "Portfolio administrator",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "templates-owner",
+        "description": "Templates owner",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "templates-member",
+        "description": "Templates member",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "default-roles-asaa",
+        "description": "Default composite role",
+        "composite": true,
+        "composites": {
+          "realm": [
+            "offline_access",
+            "uma_authorization"
+          ]
+        },
+        "clientRole": false
+      }
+    ]
+  },
+  "groups": [
+    {
+      "name": "asaa-administrators",
+      "path": "/asaa-administrators",
+      "realmRoles": [
+        "ar:customer:read",
+        "ar:customer:write",
+        "ar:invoice:issue",
+        "ar:invoice:read",
+        "ar:invoice:write",
+        "ar:receipt:allocate",
+        "ar:receipt:read",
+        "ar:receipt:write",
+        "audit:read",
+        "authorization:assignment:approve",
+        "authorization:assignment:create",
+        "authorization:assignment:read",
+        "authorization:assignment:revoke",
+        "authorization:role:approve",
+        "authorization:role:read",
+        "authorization:role:write",
+        "expense:claim:read",
+        "expense:claim:read:all",
+        "expense:claim:reimburse",
+        "expense:claim:review",
+        "expense:claim:submit",
+        "expense:claim:write",
+        "governance:decision:approve",
+        "governance:decision:create",
+        "governance:decision:read",
+        "governance:decision:reject",
+        "governance:delegation:approve",
+        "governance:delegation:create",
+        "governance:delegation:read",
+        "governance:delegation:reject",
+        "governance:delegation:revoke",
+        "hr:asset:read",
+        "hr:asset:write",
+        "hr:document:read",
+        "hr:document:write",
+        "hr:employee:lifecycle",
+        "hr:employee:read",
+        "hr:employee:write",
+        "hr:employment:write",
+        "hr:exit:complete",
+        "hr:exit:read",
+        "hr:exit:write",
+        "hr:leave:policy:approve",
+        "hr:leave:policy:read",
+        "hr:leave:policy:write",
+        "hr:leave:read",
+        "hr:leave:request",
+        "hr:leave:review",
+        "identity:access-review:create",
+        "identity:access-review:read",
+        "identity:access-review:review",
+        "identity:link:write",
+        "identity:sync:enqueue",
+        "identity:sync:read",
+        "identity:sync:reconcile",
+        "identity:sync:run",
+        "masterdata:domain:read",
+        "masterdata:domain:write",
+        "masterdata:record:read",
+        "masterdata:record:supersede",
+        "masterdata:record:write",
+        "notification:outbox:read",
+        "notification:process",
+        "notification:send",
+        "notification:template:read",
+        "notification:template:write",
+        "onboarding:assignment:write",
+        "onboarding:read",
+        "onboarding:task:assign",
+        "onboarding:task:update",
+        "onboarding:template:write",
+        "ops:backup:read",
+        "ops:status:read",
+        "organization:profile:read",
+        "organization:profile:write",
+        "organization:structure:approve",
+        "organization:structure:read",
+        "organization:structure:write",
+        "payroll:accounting:read",
+        "payroll:compensation:approve",
+        "payroll:compensation:read",
+        "payroll:compensation:write",
+        "payroll:entry:write",
+        "payroll:period:close",
+        "payroll:period:write",
+        "payroll:read",
+        "payroll:run:approve",
+        "payroll:run:close",
+        "payroll:run:submit",
+        "payroll:run:write",
+        "procurement:request:read",
+        "procurement:request:read:all",
+        "procurement:request:review",
+        "procurement:request:submit",
+        "procurement:request:write",
+        "register:budget:read",
+        "supplier:read",
+        "supplier:status",
+        "supplier:verify",
+        "supplier:write",
+        "tms:timesheet:read",
+        "tms:timesheet:read:all",
+        "tms:timesheet:review",
+        "tms:timesheet:submit",
+        "tms:timesheet:write",
+        "jarvis-owner",
+        "portfolio-admin",
+        "templates-owner"
+      ],
+      "attributes": {
+        "description": [
+          "Administrators: every human ASAA permission. System permissions are excluded."
+        ]
+      }
+    },
+    {
+      "name": "employees",
+      "path": "/employees",
+      "realmRoles": [
+        "ar:customer:read",
+        "ar:invoice:read",
+        "ar:receipt:read",
+        "authorization:assignment:read",
+        "authorization:role:read",
+        "expense:claim:read",
+        "expense:claim:read:all",
+        "governance:decision:read",
+        "governance:delegation:read",
+        "hr:asset:read",
+        "hr:document:read",
+        "hr:employee:read",
+        "hr:exit:read",
+        "hr:leave:policy:read",
+        "hr:leave:read",
+        "identity:access-review:read",
+        "identity:sync:read",
+        "masterdata:domain:read",
+        "masterdata:record:read",
+        "notification:outbox:read",
+        "notification:template:read",
+        "onboarding:read",
+        "organization:profile:read",
+        "organization:structure:read",
+        "payroll:accounting:read",
+        "payroll:compensation:read",
+        "payroll:read",
+        "procurement:request:read",
+        "procurement:request:read:all",
+        "register:budget:read",
+        "supplier:read",
+        "tms:timesheet:read",
+        "tms:timesheet:read:all",
+        "templates-member"
+      ],
+      "attributes": {
+        "description": [
+          "Employees: read-level ASAA permissions (audit and ops excluded) and the Templates member role."
+        ]
+      }
+    }
+  ],
+  "users": [],
+  "clients": [
+    {
+      "clientId": "asaa-portal",
+      "name": "ASAA portal",
+      "description": "Public PKCE client for the ASAA web portal",
+      "enabled": true,
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "protocol": "openid-connect",
+      "rootUrl": "http://127.0.0.1:8100",
+      "redirectUris": [
+        "http://127.0.0.1:5173/*",
+        "http://127.0.0.1:8100/*"
+      ],
+      "webOrigins": [
+        "http://127.0.0.1:5173",
+        "http://127.0.0.1:8100"
+      ],
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "post.logout.redirect.uris": "http://127.0.0.1:5173/*##http://127.0.0.1:8100/*"
+      },
+      "defaultClientScopes": [
+        "web-origins",
+        "acr",
+        "profile",
+        "roles",
+        "email"
+      ],
+      "optionalClientScopes": [
+        "offline_access"
+      ],
+      "protocolMappers": [
+        {
+          "name": "asaa-api audience",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.custom.audience": "asaa-api",
+            "access.token.claim": "true",
+            "id.token.claim": "false",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "org_id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-hardcoded-claim-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "org_id",
+            "claim.value": "asaa",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        },
+        {
+          "name": "permissions",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "permissions",
+            "multivalued": "true",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "false",
+            "userinfo.token.claim": "false"
+          }
+        },
+        {
+          "name": "amr",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-amr-mapper",
+          "consentRequired": false,
+          "config": {
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "false"
+          }
+        },
+        {
+          "name": "realm roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "realm_access.roles",
+            "multivalued": "true",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "false"
+          }
+        },
+        {
+          "name": "preferred_username",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-property-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "username",
+            "claim.name": "preferred_username",
+            "jsonType.label": "String",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        }
+      ]
+    },
+    {
+      "clientId": "asaa-api",
+      "name": "ASAA API (audience)",
+      "description": "Resource-server audience. Tokens for ASAA endpoints carry aud=asaa-api. Not used for interactive login.",
+      "enabled": true,
+      "bearerOnly": true,
+      "publicClient": false,
+      "standardFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "protocol": "openid-connect"
+    },
+    {
+      "clientId": "templates-web",
+      "name": "Templates web",
+      "description": "Confidential client for the Templates web app. Keycloak generates the secret on first import. It is not stored in this file.",
+      "enabled": true,
+      "publicClient": false,
+      "clientAuthenticatorType": "client-secret",
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "protocol": "openid-connect",
+      "rootUrl": "http://127.0.0.1:8200",
+      "redirectUris": [
+        "http://127.0.0.1:5000/*",
+        "http://127.0.0.1:8200/*"
+      ],
+      "webOrigins": [
+        "http://127.0.0.1:5000",
+        "http://127.0.0.1:8200"
+      ],
+      "attributes": {
+        "pkce.code.challenge.method": "S256"
+      },
+      "defaultClientScopes": [
+        "web-origins",
+        "acr",
+        "profile",
+        "roles",
+        "email"
+      ],
+      "protocolMappers": [
+        {
+          "name": "asaa-api audience",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.custom.audience": "asaa-api",
+            "access.token.claim": "true",
+            "id.token.claim": "false",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "org_id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-hardcoded-claim-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "org_id",
+            "claim.value": "asaa",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        },
+        {
+          "name": "permissions",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "permissions",
+            "multivalued": "true",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "false",
+            "userinfo.token.claim": "false"
+          }
+        },
+        {
+          "name": "amr",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-amr-mapper",
+          "consentRequired": false,
+          "config": {
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "false"
+          }
+        },
+        {
+          "name": "realm roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "realm_access.roles",
+            "multivalued": "true",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "false"
+          }
+        },
+        {
+          "name": "preferred_username",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-property-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "username",
+            "claim.name": "preferred_username",
+            "jsonType.label": "String",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        }
+      ]
+    },
+    {
+      "clientId": "portfolio-admin",
+      "name": "Portfolio admin",
+      "description": "Confidential client for Portfolio administration. Keycloak generates the secret on first import. It is not stored in this file.",
+      "enabled": true,
+      "publicClient": false,
+      "clientAuthenticatorType": "client-secret",
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "protocol": "openid-connect",
+      "rootUrl": "http://127.0.0.1:8300",
+      "redirectUris": [
+        "http://127.0.0.1:5173/*",
+        "http://127.0.0.1:8300/*"
+      ],
+      "webOrigins": [
+        "http://127.0.0.1:5173",
+        "http://127.0.0.1:8300"
+      ],
+      "attributes": {
+        "pkce.code.challenge.method": "S256"
+      },
+      "defaultClientScopes": [
+        "web-origins",
+        "acr",
+        "profile",
+        "roles",
+        "email"
+      ],
+      "protocolMappers": [
+        {
+          "name": "asaa-api audience",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.custom.audience": "asaa-api",
+            "access.token.claim": "true",
+            "id.token.claim": "false",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "org_id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-hardcoded-claim-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "org_id",
+            "claim.value": "asaa",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        },
+        {
+          "name": "permissions",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "permissions",
+            "multivalued": "true",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "false",
+            "userinfo.token.claim": "false"
+          }
+        },
+        {
+          "name": "amr",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-amr-mapper",
+          "consentRequired": false,
+          "config": {
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "false"
+          }
+        },
+        {
+          "name": "realm roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "realm_access.roles",
+            "multivalued": "true",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "false"
+          }
+        },
+        {
+          "name": "preferred_username",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-property-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "username",
+            "claim.name": "preferred_username",
+            "jsonType.label": "String",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        }
+      ]
+    },
+    {
+      "clientId": "jarvis-companion",
+      "name": "JARVIS companion",
+      "description": "Public PKCE client for the JARVIS companion UI",
+      "enabled": true,
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "protocol": "openid-connect",
+      "rootUrl": "http://127.0.0.1:3000",
+      "redirectUris": [
+        "http://127.0.0.1:3000/auth/callback"
+      ],
+      "webOrigins": [
+        "http://127.0.0.1:3000"
+      ],
+      "attributes": {
+        "pkce.code.challenge.method": "S256"
+      },
+      "defaultClientScopes": [
+        "web-origins",
+        "acr",
+        "profile",
+        "roles",
+        "email"
+      ],
+      "protocolMappers": [
+        {
+          "name": "asaa-api audience",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.custom.audience": "asaa-api",
+            "access.token.claim": "true",
+            "id.token.claim": "false",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "org_id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-hardcoded-claim-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "org_id",
+            "claim.value": "asaa",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        },
+        {
+          "name": "permissions",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "permissions",
+            "multivalued": "true",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "false",
+            "userinfo.token.claim": "false"
+          }
+        },
+        {
+          "name": "amr",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-amr-mapper",
+          "consentRequired": false,
+          "config": {
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "false"
+          }
+        },
+        {
+          "name": "realm roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "realm_access.roles",
+            "multivalued": "true",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "false"
+          }
+        },
+        {
+          "name": "preferred_username",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-property-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "username",
+            "claim.name": "preferred_username",
+            "jsonType.label": "String",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        }
+      ]
+    }
+  ],
+  "identityProviders": [
+    {
+      "alias": "google",
+      "displayName": "Google (disabled: would send identity data to Google)",
+      "providerId": "google",
+      "enabled": false,
+      "trustEmail": false,
+      "storeToken": false,
+      "addReadTokenRoleOnCreate": false,
+      "authenticateByDefault": false,
+      "linkOnly": false,
+      "config": {
+        "clientId": "",
+        "syncMode": "IMPORT"
+      }
+    },
+    {
+      "alias": "microsoft",
+      "displayName": "Microsoft (disabled: would send identity data to Microsoft)",
+      "providerId": "microsoft",
+      "enabled": false,
+      "trustEmail": false,
+      "storeToken": false,
+      "addReadTokenRoleOnCreate": false,
+      "authenticateByDefault": false,
+      "linkOnly": false,
+      "config": {
+        "clientId": "",
+        "syncMode": "IMPORT"
+      }
+    }
+  ],
+  "authenticatorConfig": [
+    {
+      "alias": "asaa-otp-amr",
+      "config": {
+        "default.reference.value": "otp",
+        "default.max.age": "300",
+        "max.age": "300"
+      }
+    }
+  ],
+  "authenticationFlows": [
+    {
+      "alias": "asaa-browser",
+      "description": "ASAA browser login: password plus authenticator-app TOTP, required for every user",
+      "providerId": "basic-flow",
+      "topLevel": true,
+      "builtIn": false,
+      "authenticationExecutions": [
+        {
+          "authenticator": "auth-cookie",
+          "requirement": "ALTERNATIVE",
+          "priority": 10,
+          "userSetupAllowed": false,
+          "autheticatorFlow": false
+        },
+        {
+          "authenticator": "auth-spnego",
+          "requirement": "DISABLED",
+          "priority": 20,
+          "userSetupAllowed": false,
+          "autheticatorFlow": false
+        },
+        {
+          "authenticator": "identity-provider-redirector",
+          "requirement": "ALTERNATIVE",
+          "priority": 25,
+          "userSetupAllowed": false,
+          "autheticatorFlow": false
+        },
+        {
+          "authenticatorFlow": true,
+          "flowAlias": "asaa forms",
+          "requirement": "ALTERNATIVE",
+          "priority": 30,
+          "userSetupAllowed": false,
+          "autheticatorFlow": true
+        }
+      ]
+    },
+    {
+      "alias": "asaa forms",
+      "description": "Username and password, then TOTP",
+      "providerId": "basic-flow",
+      "topLevel": false,
+      "builtIn": false,
+      "authenticationExecutions": [
+        {
+          "authenticator": "auth-username-password-form",
+          "requirement": "REQUIRED",
+          "priority": 10,
+          "userSetupAllowed": false,
+          "autheticatorFlow": false
+        },
+        {
+          "authenticator": "auth-otp-form",
+          "requirement": "REQUIRED",
+          "priority": 20,
+          "userSetupAllowed": false,
+          "autheticatorFlow": false,
+          "authenticatorConfig": "asaa-otp-amr"
+        }
+      ]
+    }
+  ],
+  "browserFlow": "asaa-browser"
+}
