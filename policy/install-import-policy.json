@@ -1,0 +1,82 @@
+{
+  "schema": "asaa.configuration.install-import-policy.v1",
+  "owner": "ASAA organization owner",
+  "description": "Nothing new is installed, pulled, or imported into the ASAA ecosystem without an owner approval record. New npm or Python packages, Docker images, command-line tools, and bulk data imports are blocked until approved here. The approved baseline is snapshotted in policy/approved-dependencies.json and re-checked by checks/check-dependency-approval.mjs.",
+  "scope": [
+    "npm and Node packages (package.json dependencies and devDependencies)",
+    "Python packages (pyproject.toml and requirements*.txt)",
+    "Docker images and compose image references",
+    "Command-line tools and runtimes installed on this laptop for the ecosystem",
+    "Bulk data imports into any project database or identity store"
+  ],
+  "approvalRecordRequired": {
+    "fields": ["id", "date", "what", "why", "approver"],
+    "example": {
+      "id": "APR-0000-000",
+      "date": "YYYY-MM-DD",
+      "what": "package name, image tag, tool or import source",
+      "why": "business or technical purpose",
+      "approver": "owner name or role"
+    },
+    "location": "policy/install-import-approvals.json (created when the first approval is granted)"
+  },
+  "rules": [
+    {
+      "id": "IIP-1",
+      "rule": "Every new dependency, Docker image, tool, or bulk import requires an approval record before it is added or run.",
+      "severity": "fail"
+    },
+    {
+      "id": "IIP-2",
+      "rule": "Dependency manifests (package.json, pyproject.toml, requirements*.txt) are snapshotted into approved-dependencies.json. Any dependency absent from the snapshot fails the check until approved and re-snapshotted.",
+      "severity": "fail"
+    },
+    {
+      "id": "IIP-3",
+      "rule": "Docker images must use an exact tag. The 'latest' tag and unpinned references are not allowed.",
+      "severity": "fail"
+    },
+    {
+      "id": "IIP-4",
+      "rule": "Only images listed in approvedDockerImages may be used. Adding an image requires an approval record first.",
+      "severity": "fail"
+    },
+    {
+      "id": "IIP-5",
+      "rule": "Snapshot refresh (check-dependency-approval.mjs --snapshot) is run only after an approval record exists for every change it captures.",
+      "severity": "fail"
+    },
+    {
+      "id": "IIP-6",
+      "rule": "Bulk data imports into a system of record need an approval record that names the source, the target, the personal-data classification, and the rollback method.",
+      "severity": "fail"
+    },
+    {
+      "id": "IIP-7",
+      "rule": "Zero-cost default: paid products, paid licences and paid cloud services are not approved by this policy.",
+      "severity": "fail"
+    }
+  ],
+  "approvedDockerImages": [
+    {
+      "image": "quay.io/keycloak/keycloak:26.8.1",
+      "purpose": "Single sign-on server for the ASAA realm (identity/docker-compose.yml)",
+      "approvalId": "APR-INITIAL-KEYCLOAK",
+      "approvedBy": "owner (instruction to pull this one image)",
+      "approvedDate": "2026-11-18",
+      "boundTo": "127.0.0.1:8280 only"
+    }
+  ],
+  "approvedTools": [
+    {
+      "tool": "Docker Desktop",
+      "purpose": "Runs the Keycloak container",
+      "approvalId": "APR-INITIAL-DOCKER",
+      "status": "pre-existing on this laptop; not installed by this project"
+    }
+  ],
+  "approvedDependencySnapshot": "policy/approved-dependencies.json",
+  "pendingOwnerApproval": [
+    "Any dependency for checks/ beyond the Node standard library (currently none; checks use no packages)."
+  ]
+}
