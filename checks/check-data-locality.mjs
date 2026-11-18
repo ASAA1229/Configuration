@@ -2,12 +2,46 @@
 // Read-only. Reports key names and pass/fail only. Values are never printed.
 // Usage: node checks/check-data-locality.mjs
 
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
-import { CONFIG_ROOT, PROJECT_REPOS, isLoopbackUrl, isLoopbackHost, parseEnvText, readJson } from "./lib/env.mjs";
+import { CONFIG_ROOT, PROJECT_REPOS, isLoopbackUrl, isLoopbackHost, parseEnvText, readJson, walkFiles } from "./lib/env.mjs";
 
-const ENV_FILES = [".env", ".env.local", ".env.local-prod", ".dev.vars", ".env.example"];
+const ENV_FILE_NAMES = new Set([".env", ".env.local", ".env.local-prod", ".env.production", ".env.development", ".env.test", ".dev.vars", ".env.example"]);
 const TRUTHY = new Set(["1", "true", "yes", "on"]);
+
+// Keys whose value, when set, must point to a loopback host.
+const LOOPBACK_URL_KEYS = new Set([
+  "OLLAMA_URL", "JARVIS_AI_URL", "JARVIS_AI_BASE_URL", "JARVIS_CLOUD_OPENAI_BASE_URL", "JARVIS_CLOUD_ANTHROPIC_BASE_URL",
+  "ASAA_EVENTS_URL", "ASAA_EVENTS_TOKEN_URL", "JARVIS_OIDC_ISSUER", "PORTFOLIO_OIDC_ISSUER", "ASAA_IDENTITY_KEYCLOAK_URL",
+]);
+// Keys that must be empty or off.
+const MUST_BE_OFF = new Map([
+  ["JARVIS_ALLOW_CLOUD_SPEECH", (v) => !TRUTHY.has(v.toLowerCase())],
+  ["JARVIS_SITE_GATEWAY_ALLOW_CLOUD", (v) => v === "" || v.toLowerCase() === "false"],
+  ["JARVIS_AI_ALLOW_REMOTE", (v) => !TRUTHY.has(v.toLowerCase())],
+  ["PORTFOLIO_AI_ALLOW_PAID_FALLBACK", (v) => v.toLowerCase() !== "true"],
+  ["JARVIS_CLOUD_ALLOWED_TASKS", (v) => v === ""],
+  ["OPENAI_API_KEY", (v) => v === ""],
+  ["JARVIS_CLOUD_OPENAI_API_KEY", (v) => v === ""],
+  ["JARVIS_CLOUD_ANTHROPIC_API_KEY", (v) => v === ""],
+]);
+const BIND_KEYS = new Set(["HOST", "BIND_HOST", "BIND_ADDRESS", "LISTEN_HOST"]);
+
+// Evaluate one key/value. Returns a list of { ok, rule } results. Values are used in memory only.
+function evaluate(rawKey, rawValue) {
+  const key = rawKey.toUpperCase();
+  const value = String(rawValue).trim();
+  const out = [];
+  if (LOOPBACK_URL_KEYS.has(key) && value !== "") out.push({ ok: isLoopbackUrl(value), rule: `${key} is loopback` });
+  if (MUST_BE_OFF.has(key)) out.push({ ok: MUST_BE_OFF.get(key)(value), rule: `${key} is off or empty` });
+  if (key === "AI_PROVIDER" && value !== "") out.push({ ok: value === "ollama" || value === "jarvis", rule: "AI_PROVIDER is ollama or jarvis" });
+  if (BIND_KEYS.has(key) && value !== "") out.push({ ok: isLoopbackHost(value), rule: `${key} is loopback` });
+  return out;
+}
+
+function stripBom(text) {
+  return text.replace(/^﻿/, "");
+}
 
 export function run() {
   const policy = readJson(join(CONFIG_ROOT, "policy", "data-locality-policy.json"));
@@ -18,88 +52,82 @@ export function run() {
     if (!ok) failures.push(label);
   };
 
-  // Rule evaluation over env files. A rule passes when every present value satisfies it.
   for (const repo of PROJECT_REPOS) {
-    lines.push(`--- ${repo.name} (${repo.path})`);
+    lines.push(`--- ${repo.name}`);
     if (!existsSync(repo.path)) {
       record(false, `${repo.name}: repository folder not found`);
       continue;
     }
-    for (const file of ENV_FILES) {
-      const full = join(repo.path, file);
-      if (!existsSync(full)) continue;
-      const env = parseEnvText(readFileSync(full, "utf8"));
-      const label = (text) => `${repo.name} ${file}: ${text}`;
-      lines.push(`    scanned ${file} (${env.size} keys)`);
+    // Env-style files anywhere in the repo (skipping dependency and build folders).
+    const envFiles = walkFiles(repo.path, (name) => ENV_FILE_NAMES.has(name));
+    // Compose and wrangler configuration.
+    const configFiles = walkFiles(repo.path, (name) => /^(docker-compose.*\.ya?ml|compose.*\.ya?ml|wrangler\.(jsonc|json|toml))$/i.test(name));
 
-      if (repo.name === "JARVIS") {
-        const ollama = env.get("OLLAMA_URL");
-        if (ollama) record(isLoopbackUrl(ollama), label("OLLAMA_URL is loopback [DL-AI-OLLAMA]"));
-        for (const key of ["JARVIS_CLOUD_OPENAI_API_KEY", "JARVIS_CLOUD_ANTHROPIC_API_KEY"]) {
-          if (env.has(key)) record(env.get(key) === "", label(`${key} is empty [DL-CLOUD-KEYS-UNSET]`));
-        }
-        if (env.has("JARVIS_CLOUD_ALLOWED_TASKS")) record(env.get("JARVIS_CLOUD_ALLOWED_TASKS") === "", label("JARVIS_CLOUD_ALLOWED_TASKS is empty [DL-CLOUD-ALLOWED-TASKS]"));
-        if (env.has("JARVIS_ALLOW_CLOUD_SPEECH")) record(!TRUTHY.has(env.get("JARVIS_ALLOW_CLOUD_SPEECH").toLowerCase()), label("JARVIS_ALLOW_CLOUD_SPEECH is off [DL-CLOUD-SPEECH-OFF]"));
-        if (env.has("JARVIS_SITE_GATEWAY_ALLOW_CLOUD")) record(["", "false"].includes(env.get("JARVIS_SITE_GATEWAY_ALLOW_CLOUD").toLowerCase()), label("JARVIS_SITE_GATEWAY_ALLOW_CLOUD is false [DL-CLOUD-SITE-GATEWAY-OFF]"));
+    for (const file of envFiles) {
+      const env = parseEnvText(stripBom(readFileSync(file, "utf8")));
+      const rel = file.slice(repo.path.length + 1).replace(/\\/g, "/");
+      lines.push(`    scanned ${rel} (${env.size} keys)`);
+      for (const [k, v] of env) {
+        for (const r of evaluate(k, v)) record(r.ok, `${repo.name} ${rel}: ${r.rule}`);
       }
+    }
 
-      if (repo.name === "Templates") {
-        const provider = env.get("AI_PROVIDER");
-        if (provider !== undefined) record(provider === "ollama" || provider === "jarvis", label("AI_PROVIDER is ollama or jarvis [DL-AI-JARVIS-GATEWAY]"));
-        for (const key of ["OLLAMA_URL", "JARVIS_AI_URL"]) {
-          if (env.has(key)) record(isLoopbackUrl(env.get(key)), label(`${key} is loopback [DL-AI-JARVIS-GATEWAY]`));
-        }
+    for (const file of configFiles) {
+      const text = stripBom(readFileSync(file, "utf8"));
+      const rel = file.slice(repo.path.length + 1).replace(/\\/g, "/");
+      const pairs = [];
+      // YAML environment entries: "- KEY=value" or "KEY: value"; JSON/TOML: "KEY": "value" or KEY = "value".
+      for (const m of text.matchAll(/^\s*-?\s*([A-Za-z_][A-Za-z0-9_]*)\s*[:=]\s*["']?([^"'\s#,]*)["']?/gm)) pairs.push([m[1], m[2]]);
+      for (const m of text.matchAll(/"([A-Za-z_][A-Za-z0-9_]*)"\s*:\s*"([^"]*)"/g)) pairs.push([m[1], m[2]]);
+      let checked = 0;
+      for (const [k, v] of pairs) {
+        const results = evaluate(k, v);
+        checked += results.length;
+        for (const r of results) record(r.ok, `${repo.name} ${rel}: ${r.rule}`);
       }
+      lines.push(`    scanned ${rel} (${checked} rule checks)`);
+    }
 
-      if (repo.name === "Portfolio") {
-        if (env.has("JARVIS_AI_URL") && env.get("JARVIS_AI_URL") !== "") record(isLoopbackUrl(env.get("JARVIS_AI_URL")), label("JARVIS_AI_URL is loopback [DL-AI-JARVIS-LOOPBACK]"));
-        if (env.has("PORTFOLIO_AI_ALLOW_PAID_FALLBACK")) record(env.get("PORTFOLIO_AI_ALLOW_PAID_FALLBACK").toLowerCase() !== "true", label("PORTFOLIO_AI_ALLOW_PAID_FALLBACK is not true [DL-PAID-FALLBACK-OFF]"));
-        if (env.has("OPENAI_API_KEY")) record(env.get("OPENAI_API_KEY") === "", label("OPENAI_API_KEY is empty [DL-OPENAI-KEY-UNSET]"));
-      }
-
-      for (const key of ["HOST", "BIND_HOST", "BIND_ADDRESS", "LISTEN_HOST", "HOSTNAME"]) {
-        if (env.has(key) && env.get(key) !== "") record(isLoopbackHost(env.get(key)), label(`${key} is loopback [DL-BIND-LOOPBACK]`));
-      }
+    // Code defaults must exist and default to the policy.
+    const codeDefaults = {
+      Templates: [["apps/api/src/config/env.ts", "templates-defaults"]],
+      JARVIS: [["src/ai/providerRouter.ts", "jarvis-router"], ["src/voice/providers.ts", "jarvis-speech"]],
+      Portfolio: [["src/lib/ai-provider.ts", "portfolio-ai"]],
+    }[repo.name] ?? [];
+    for (const [rel] of codeDefaults) {
+      record(existsSync(join(repo.path, rel)), `${repo.name} code-default file present: ${rel}`);
     }
   }
 
-  // Static code defaults: a repo with no env file still must default to loopback.
   lines.push("--- code defaults");
   const templatesEnv = join(PROJECT_REPOS[2].path, "apps", "api", "src", "config", "env.ts");
   if (existsSync(templatesEnv)) {
-    const src = readFileSync(templatesEnv, "utf8");
+    const src = stripBom(readFileSync(templatesEnv, "utf8"));
     const ollama = /OLLAMA_URL:\s*z\.string\(\)\.url\(\)\.default\("([^"]+)"\)/.exec(src);
     const jarvis = /JARVIS_AI_URL:\s*z\.string\(\)\.url\(\)\.default\("([^"]+)"\)/.exec(src);
     const provider = /AI_PROVIDER:\s*z\.enum\(\[([^\]]+)\]\)\.default\("([^"]+)"\)/.exec(src);
-    record(!!ollama && isLoopbackUrl(ollama[1]), "Templates code default OLLAMA_URL is loopback [DL-AI-JARVIS-GATEWAY]");
-    record(!!jarvis && isLoopbackUrl(jarvis[1]), "Templates code default JARVIS_AI_URL is loopback [DL-AI-JARVIS-GATEWAY]");
-    record(!!provider && ["ollama", "jarvis"].includes(provider[2]), "Templates code default AI_PROVIDER is ollama or jarvis [DL-AI-JARVIS-GATEWAY]");
-  } else {
-    record(false, "Templates apps/api/src/config/env.ts not found (cannot verify defaults)");
+    record(!!ollama && isLoopbackUrl(ollama[1]), "Templates code default OLLAMA_URL is loopback");
+    record(!!jarvis && isLoopbackUrl(jarvis[1]), "Templates code default JARVIS_AI_URL is loopback");
+    record(!!provider && ["ollama", "jarvis"].includes(provider[2]), "Templates code default AI_PROVIDER is ollama or jarvis");
   }
-
   const jarvisRouter = join(PROJECT_REPOS[1].path, "src", "ai", "providerRouter.ts");
   if (existsSync(jarvisRouter)) {
-    const src = readFileSync(jarvisRouter, "utf8");
+    const src = stripBom(readFileSync(jarvisRouter, "utf8"));
     const ollamaLine = src.split(/\r?\n/).find((line) => line.includes("env['OLLAMA_URL']")) ?? "";
     const literals = [...ollamaLine.matchAll(/'(https?:\/\/[^']+)'/g)].map((m) => m[1]);
-    record(literals.length > 0 && literals.every(isLoopbackUrl), "JARVIS code default OLLAMA_URL is loopback [DL-AI-OLLAMA]");
+    record(literals.length > 0 && literals.every(isLoopbackUrl), "JARVIS code default OLLAMA_URL is loopback");
     const tasks = /JARVIS_CLOUD_ALLOWED_TASKS'\]\s*\|\|\s*'([^']*)'/.exec(src);
-    record(!!tasks && tasks[1] === "", "JARVIS code default JARVIS_CLOUD_ALLOWED_TASKS is empty [DL-CLOUD-ALLOWED-TASKS]");
+    record(!!tasks && tasks[1] === "", "JARVIS code default JARVIS_CLOUD_ALLOWED_TASKS is empty");
   }
-
   const portfolioProvider = join(PROJECT_REPOS[3].path, "src", "lib", "ai-provider.ts");
   if (existsSync(portfolioProvider)) {
-    const src = readFileSync(portfolioProvider, "utf8");
-    record(/PORTFOLIO_AI_ALLOW_PAID_FALLBACK"\]\s*===\s*"true"/.test(src), "Portfolio paid fallback is opt-in only (=== \"true\") [DL-PAID-FALLBACK-OFF]");
+    const src = stripBom(readFileSync(portfolioProvider, "utf8"));
+    record(/PORTFOLIO_AI_ALLOW_PAID_FALLBACK"\]\s*===\s*"true"/.test(src), "Portfolio paid fallback is opt-in only");
   }
 
-  // Identity providers in the realm file must be disabled.
   lines.push("--- identity (configuration project)");
   const realm = readJson(join(CONFIG_ROOT, "identity", "realm", "asaa-realm.json"));
-  for (const idp of realm.identityProviders ?? []) {
-    record(idp.enabled === false, `realm identityProvider ${idp.alias} is disabled [DL-IDP-DISABLED]`);
-  }
+  for (const idp of realm.identityProviders ?? []) record(idp.enabled === false, `realm identityProvider ${idp.alias} is disabled`);
   record(realm.registrationAllowed === false, "realm self-registration is off");
 
   lines.push(`policy rules loaded: ${policy.rules.length}`);
