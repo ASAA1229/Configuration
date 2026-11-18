@@ -776,7 +776,6 @@
         "composite": true,
         "composites": {
           "realm": [
-            "offline_access",
             "uma_authorization"
           ]
         },
@@ -1153,9 +1152,7 @@
         "roles",
         "email"
       ],
-      "optionalClientScopes": [
-        "offline_access"
-      ],
+      "optionalClientScopes": [],
       "protocolMappers": [
         {
           "name": "asaa-api audience",
@@ -1994,5 +1991,8 @@
         "integration:event:write"
       ]
     }
-  ]
+  ],
+  "offlineSessionIdleTimeout": 1800,
+  "offlineSessionMaxLifespanEnabled": true,
+  "offlineSessionMaxLifespan": 36000
 }
