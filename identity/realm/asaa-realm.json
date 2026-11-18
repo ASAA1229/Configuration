@@ -1776,8 +1776,8 @@
       "alias": "asaa-otp-amr",
       "config": {
         "default.reference.value": "otp",
-        "default.max.age": "300",
-        "max.age": "300"
+        "default.max.age": "1800",
+        "max.age": "1800"
       }
     }
   ],
@@ -1805,7 +1805,7 @@
         },
         {
           "authenticator": "identity-provider-redirector",
-          "requirement": "ALTERNATIVE",
+          "requirement": "DISABLED",
           "priority": 25,
           "userSetupAllowed": false,
           "autheticatorFlow": false
