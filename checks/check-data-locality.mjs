@@ -2,7 +2,7 @@
 // Read-only. Reports key names and pass/fail only. Values are never printed.
 // Usage: node checks/check-data-locality.mjs
 
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { CONFIG_ROOT, PROJECT_REPOS, isLoopbackUrl, isLoopbackHost, parseEnvText, readJson, walkFiles } from "./lib/env.mjs";
 

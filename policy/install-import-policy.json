@@ -10,7 +10,13 @@
     "Bulk data imports into any project database or identity store"
   ],
   "approvalRecordRequired": {
-    "fields": ["id", "date", "what", "why", "approver"],
+    "fields": [
+      "id",
+      "date",
+      "what",
+      "why",
+      "approver"
+    ],
     "example": {
       "id": "APR-0000-000",
       "date": "YYYY-MM-DD",
@@ -59,12 +65,13 @@
   ],
   "approvedDockerImages": [
     {
-      "image": "quay.io/keycloak/keycloak:26.8.1",
+      "image": "quay.io/keycloak/keycloak:26.8.1@sha256:3f3c5f8e03c614774b4bd9173b88391fefa4153bfc010d8012d59ad825377332",
       "purpose": "Single sign-on server for the ASAA realm (identity/docker-compose.yml)",
       "approvalId": "APR-INITIAL-KEYCLOAK",
       "approvedBy": "owner (instruction to pull this one image)",
       "approvedDate": "2026-11-18",
-      "boundTo": "127.0.0.1:8280 only"
+      "boundTo": "127.0.0.1:8280 only",
+      "digestSource": "digest of the image pulled on 2026-11-17 for the owner-authorized 26.8.1 pull"
     }
   ],
   "approvedTools": [
