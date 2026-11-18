@@ -8,6 +8,15 @@ services:
     image: quay.io/keycloak/keycloak:26.8.1
     container_name: asaa-keycloak
     restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
     # start-dev: local development mode with file-based storage. Realm files in ./realm are imported on first start.
     command: ["start-dev", "--import-realm"]
     environment:
