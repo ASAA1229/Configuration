@@ -1052,17 +1052,17 @@
           }
         },
         {
-          "name": "permissions",
+          "name": "preferred_username",
           "protocol": "openid-connect",
-          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "protocolMapper": "oidc-usermodel-property-mapper",
           "consentRequired": false,
           "config": {
-            "claim.name": "permissions",
-            "multivalued": "true",
+            "user.attribute": "username",
+            "claim.name": "preferred_username",
             "jsonType.label": "String",
+            "id.token.claim": "true",
             "access.token.claim": "true",
-            "id.token.claim": "false",
-            "userinfo.token.claim": "false"
+            "userinfo.token.claim": "true"
           }
         },
         {
@@ -1073,6 +1073,20 @@
           "config": {
             "id.token.claim": "true",
             "access.token.claim": "true",
+            "userinfo.token.claim": "false"
+          }
+        },
+        {
+          "name": "permissions",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "permissions",
+            "multivalued": "true",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "false",
             "userinfo.token.claim": "false"
           }
         },
@@ -1089,22 +1103,9 @@
             "id.token.claim": "true",
             "userinfo.token.claim": "false"
           }
-        },
-        {
-          "name": "preferred_username",
-          "protocol": "openid-connect",
-          "protocolMapper": "oidc-usermodel-property-mapper",
-          "consentRequired": false,
-          "config": {
-            "user.attribute": "username",
-            "claim.name": "preferred_username",
-            "jsonType.label": "String",
-            "id.token.claim": "true",
-            "access.token.claim": "true",
-            "userinfo.token.claim": "true"
-          }
         }
-      ]
+      ],
+      "fullScopeAllowed": false
     },
     {
       "clientId": "asaa-api",
@@ -1151,12 +1152,12 @@
       ],
       "protocolMappers": [
         {
-          "name": "asaa-api audience",
+          "name": "templates-web audience",
           "protocol": "openid-connect",
           "protocolMapper": "oidc-audience-mapper",
           "consentRequired": false,
           "config": {
-            "included.custom.audience": "asaa-api",
+            "included.client.audience": "templates-web",
             "access.token.claim": "true",
             "id.token.claim": "false",
             "introspection.token.claim": "true"
@@ -1177,17 +1178,17 @@
           }
         },
         {
-          "name": "permissions",
+          "name": "preferred_username",
           "protocol": "openid-connect",
-          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "protocolMapper": "oidc-usermodel-property-mapper",
           "consentRequired": false,
           "config": {
-            "claim.name": "permissions",
-            "multivalued": "true",
+            "user.attribute": "username",
+            "claim.name": "preferred_username",
             "jsonType.label": "String",
+            "id.token.claim": "true",
             "access.token.claim": "true",
-            "id.token.claim": "false",
-            "userinfo.token.claim": "false"
+            "userinfo.token.claim": "true"
           }
         },
         {
@@ -1214,22 +1215,9 @@
             "id.token.claim": "true",
             "userinfo.token.claim": "false"
           }
-        },
-        {
-          "name": "preferred_username",
-          "protocol": "openid-connect",
-          "protocolMapper": "oidc-usermodel-property-mapper",
-          "consentRequired": false,
-          "config": {
-            "user.attribute": "username",
-            "claim.name": "preferred_username",
-            "jsonType.label": "String",
-            "id.token.claim": "true",
-            "access.token.claim": "true",
-            "userinfo.token.claim": "true"
-          }
         }
-      ]
+      ],
+      "fullScopeAllowed": false
     },
     {
       "clientId": "portfolio-admin",
@@ -1264,12 +1252,12 @@
       ],
       "protocolMappers": [
         {
-          "name": "asaa-api audience",
+          "name": "portfolio-admin audience",
           "protocol": "openid-connect",
           "protocolMapper": "oidc-audience-mapper",
           "consentRequired": false,
           "config": {
-            "included.custom.audience": "asaa-api",
+            "included.client.audience": "portfolio-admin",
             "access.token.claim": "true",
             "id.token.claim": "false",
             "introspection.token.claim": "true"
@@ -1290,17 +1278,17 @@
           }
         },
         {
-          "name": "permissions",
+          "name": "preferred_username",
           "protocol": "openid-connect",
-          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "protocolMapper": "oidc-usermodel-property-mapper",
           "consentRequired": false,
           "config": {
-            "claim.name": "permissions",
-            "multivalued": "true",
+            "user.attribute": "username",
+            "claim.name": "preferred_username",
             "jsonType.label": "String",
+            "id.token.claim": "true",
             "access.token.claim": "true",
-            "id.token.claim": "false",
-            "userinfo.token.claim": "false"
+            "userinfo.token.claim": "true"
           }
         },
         {
@@ -1327,22 +1315,9 @@
             "id.token.claim": "true",
             "userinfo.token.claim": "false"
           }
-        },
-        {
-          "name": "preferred_username",
-          "protocol": "openid-connect",
-          "protocolMapper": "oidc-usermodel-property-mapper",
-          "consentRequired": false,
-          "config": {
-            "user.attribute": "username",
-            "claim.name": "preferred_username",
-            "jsonType.label": "String",
-            "id.token.claim": "true",
-            "access.token.claim": "true",
-            "userinfo.token.claim": "true"
-          }
         }
-      ]
+      ],
+      "fullScopeAllowed": false
     },
     {
       "clientId": "jarvis-companion",
@@ -1374,12 +1349,12 @@
       ],
       "protocolMappers": [
         {
-          "name": "asaa-api audience",
+          "name": "jarvis-companion audience",
           "protocol": "openid-connect",
           "protocolMapper": "oidc-audience-mapper",
           "consentRequired": false,
           "config": {
-            "included.custom.audience": "asaa-api",
+            "included.client.audience": "jarvis-companion",
             "access.token.claim": "true",
             "id.token.claim": "false",
             "introspection.token.claim": "true"
@@ -1400,17 +1375,17 @@
           }
         },
         {
-          "name": "permissions",
+          "name": "preferred_username",
           "protocol": "openid-connect",
-          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "protocolMapper": "oidc-usermodel-property-mapper",
           "consentRequired": false,
           "config": {
-            "claim.name": "permissions",
-            "multivalued": "true",
+            "user.attribute": "username",
+            "claim.name": "preferred_username",
             "jsonType.label": "String",
+            "id.token.claim": "true",
             "access.token.claim": "true",
-            "id.token.claim": "false",
-            "userinfo.token.claim": "false"
+            "userinfo.token.claim": "true"
           }
         },
         {
@@ -1437,22 +1412,9 @@
             "id.token.claim": "true",
             "userinfo.token.claim": "false"
           }
-        },
-        {
-          "name": "preferred_username",
-          "protocol": "openid-connect",
-          "protocolMapper": "oidc-usermodel-property-mapper",
-          "consentRequired": false,
-          "config": {
-            "user.attribute": "username",
-            "claim.name": "preferred_username",
-            "jsonType.label": "String",
-            "id.token.claim": "true",
-            "access.token.claim": "true",
-            "userinfo.token.claim": "true"
-          }
         }
-      ]
+      ],
+      "fullScopeAllowed": false
     },
     {
       "clientId": "asaa-identity-sync",
@@ -1524,7 +1486,8 @@
             "userinfo.token.claim": "false"
           }
         }
-      ]
+      ],
+      "fullScopeAllowed": false
     },
     {
       "clientId": "portfolio-events",
@@ -1581,7 +1544,8 @@
             "userinfo.token.claim": "false"
           }
         }
-      ]
+      ],
+      "fullScopeAllowed": false
     },
     {
       "clientId": "templates-events",
@@ -1638,7 +1602,8 @@
             "userinfo.token.claim": "false"
           }
         }
-      ]
+      ],
+      "fullScopeAllowed": false
     }
   ],
   "identityProviders": [
@@ -1747,5 +1712,155 @@
       ]
     }
   ],
-  "browserFlow": "asaa-browser"
+  "browserFlow": "asaa-browser",
+  "scopeMappings": [
+    {
+      "client": "asaa-portal",
+      "roles": [
+        "ar:customer:read",
+        "ar:customer:write",
+        "ar:invoice:issue",
+        "ar:invoice:read",
+        "ar:invoice:write",
+        "ar:receipt:allocate",
+        "ar:receipt:read",
+        "ar:receipt:write",
+        "audit:read",
+        "authorization:assignment:approve",
+        "authorization:assignment:create",
+        "authorization:assignment:read",
+        "authorization:assignment:revoke",
+        "authorization:role:approve",
+        "authorization:role:read",
+        "authorization:role:write",
+        "expense:claim:read",
+        "expense:claim:read:all",
+        "expense:claim:reimburse",
+        "expense:claim:review",
+        "expense:claim:submit",
+        "expense:claim:write",
+        "governance:decision:approve",
+        "governance:decision:create",
+        "governance:decision:read",
+        "governance:decision:reject",
+        "governance:delegation:approve",
+        "governance:delegation:create",
+        "governance:delegation:read",
+        "governance:delegation:reject",
+        "governance:delegation:revoke",
+        "hr:asset:read",
+        "hr:asset:write",
+        "hr:document:read",
+        "hr:document:write",
+        "hr:employee:lifecycle",
+        "hr:employee:read",
+        "hr:employee:write",
+        "hr:employment:write",
+        "hr:exit:complete",
+        "hr:exit:read",
+        "hr:exit:write",
+        "hr:leave:policy:approve",
+        "hr:leave:policy:read",
+        "hr:leave:policy:write",
+        "hr:leave:read",
+        "hr:leave:request",
+        "hr:leave:review",
+        "identity:access-review:create",
+        "identity:access-review:read",
+        "identity:access-review:review",
+        "identity:link:write",
+        "identity:sync:enqueue",
+        "identity:sync:read",
+        "identity:sync:reconcile",
+        "identity:sync:run",
+        "masterdata:domain:read",
+        "masterdata:domain:write",
+        "masterdata:record:read",
+        "masterdata:record:supersede",
+        "masterdata:record:write",
+        "notification:outbox:read",
+        "notification:process",
+        "notification:send",
+        "notification:template:read",
+        "notification:template:write",
+        "onboarding:assignment:write",
+        "onboarding:read",
+        "onboarding:task:assign",
+        "onboarding:task:update",
+        "onboarding:template:write",
+        "ops:backup:read",
+        "ops:status:read",
+        "organization:profile:read",
+        "organization:profile:write",
+        "organization:structure:approve",
+        "organization:structure:read",
+        "organization:structure:write",
+        "payroll:accounting:read",
+        "payroll:compensation:approve",
+        "payroll:compensation:read",
+        "payroll:compensation:write",
+        "payroll:entry:write",
+        "payroll:period:close",
+        "payroll:period:write",
+        "payroll:read",
+        "payroll:run:approve",
+        "payroll:run:close",
+        "payroll:run:submit",
+        "payroll:run:write",
+        "procurement:request:read",
+        "procurement:request:read:all",
+        "procurement:request:review",
+        "procurement:request:submit",
+        "procurement:request:write",
+        "register:budget:read",
+        "supplier:read",
+        "supplier:status",
+        "supplier:verify",
+        "supplier:write",
+        "tms:timesheet:read",
+        "tms:timesheet:read:all",
+        "tms:timesheet:review",
+        "tms:timesheet:submit",
+        "tms:timesheet:write",
+        "integration:event:write"
+      ]
+    },
+    {
+      "client": "templates-web",
+      "roles": [
+        "templates-owner",
+        "templates-member"
+      ]
+    },
+    {
+      "client": "portfolio-admin",
+      "roles": [
+        "portfolio-admin"
+      ]
+    },
+    {
+      "client": "jarvis-companion",
+      "roles": [
+        "jarvis-owner"
+      ]
+    },
+    {
+      "client": "jarvis-events",
+      "roles": [
+        "integration:event:write"
+      ]
+    },
+    {
+      "client": "portfolio-events",
+      "roles": [
+        "integration:event:write"
+      ]
+    },
+    {
+      "client": "templates-events",
+      "roles": [
+        "integration:event:write"
+      ]
+    }
+  ]
 }
