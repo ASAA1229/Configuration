@@ -786,6 +786,149 @@
   },
   "groups": [
     {
+      "name": "employees",
+      "path": "/employees",
+      "realmRoles": [
+        "hr:leave:request",
+        "hr:leave:read",
+        "expense:claim:submit",
+        "expense:claim:read",
+        "tms:timesheet:submit",
+        "tms:timesheet:read",
+        "tms:timesheet:write",
+        "procurement:request:submit",
+        "procurement:request:read",
+        "templates-member"
+      ],
+      "attributes": {
+        "description": [
+          "Employee self-service only: own leave, expenses, timesheets and procurement requests, plus the Templates member role. Own-record scope must be enforced by ASAA."
+        ]
+      }
+    },
+    {
+      "name": "hr",
+      "path": "/hr",
+      "realmRoles": [
+        "hr:asset:read",
+        "hr:asset:write",
+        "hr:document:read",
+        "hr:document:write",
+        "hr:employee:lifecycle",
+        "hr:employee:read",
+        "hr:employee:write",
+        "hr:employment:write",
+        "hr:exit:complete",
+        "hr:exit:read",
+        "hr:exit:write",
+        "hr:leave:policy:approve",
+        "hr:leave:policy:read",
+        "hr:leave:policy:write",
+        "hr:leave:read",
+        "hr:leave:request",
+        "hr:leave:review",
+        "onboarding:assignment:write",
+        "onboarding:read",
+        "onboarding:task:assign",
+        "onboarding:task:update",
+        "onboarding:template:write"
+      ],
+      "attributes": {
+        "description": [
+          "HR operations: employee records, documents, exits, onboarding and leave policy."
+        ]
+      }
+    },
+    {
+      "name": "payroll",
+      "path": "/payroll",
+      "realmRoles": [
+        "payroll:accounting:read",
+        "payroll:compensation:approve",
+        "payroll:compensation:read",
+        "payroll:compensation:write",
+        "payroll:entry:write",
+        "payroll:period:close",
+        "payroll:period:write",
+        "payroll:read",
+        "payroll:run:approve",
+        "payroll:run:close",
+        "payroll:run:submit",
+        "payroll:run:write"
+      ],
+      "attributes": {
+        "description": [
+          "Payroll operations."
+        ]
+      }
+    },
+    {
+      "name": "finance",
+      "path": "/finance",
+      "realmRoles": [
+        "ar:customer:read",
+        "ar:customer:write",
+        "ar:invoice:issue",
+        "ar:invoice:read",
+        "ar:invoice:write",
+        "ar:receipt:allocate",
+        "ar:receipt:read",
+        "ar:receipt:write",
+        "expense:claim:reimburse",
+        "expense:claim:review",
+        "procurement:request:review",
+        "register:budget:read",
+        "supplier:read",
+        "supplier:status",
+        "supplier:verify",
+        "supplier:write"
+      ],
+      "attributes": {
+        "description": [
+          "Finance: receivables, suppliers, budgets, expense reimbursement and procurement review."
+        ]
+      }
+    },
+    {
+      "name": "managers",
+      "path": "/managers",
+      "realmRoles": [
+        "expense:claim:review",
+        "governance:decision:approve",
+        "governance:decision:create",
+        "governance:decision:read",
+        "governance:decision:reject",
+        "governance:delegation:approve",
+        "governance:delegation:create",
+        "governance:delegation:read",
+        "governance:delegation:reject",
+        "governance:delegation:revoke",
+        "hr:leave:review",
+        "procurement:request:review",
+        "tms:timesheet:review"
+      ],
+      "attributes": {
+        "description": [
+          "Line managers: approvals for their teams."
+        ]
+      }
+    },
+    {
+      "name": "auditors",
+      "path": "/auditors",
+      "realmRoles": [
+        "audit:read",
+        "ops:backup:read",
+        "ops:status:read",
+        "organization:profile:read"
+      ],
+      "attributes": {
+        "description": [
+          "Read-only audit and operations status."
+        ]
+      }
+    },
+    {
       "name": "asaa-administrators",
       "path": "/asaa-administrators",
       "realmRoles": [
@@ -894,58 +1037,47 @@
         "tms:timesheet:review",
         "tms:timesheet:submit",
         "tms:timesheet:write",
-        "jarvis-owner",
-        "portfolio-admin",
-        "templates-owner"
+        "integration:event:write"
       ],
       "attributes": {
         "description": [
-          "Administrators: every human ASAA permission. System permissions are excluded."
+          "ASAA administrators: every human ASAA permission. Does not include the application owner roles."
         ]
       }
     },
     {
-      "name": "employees",
-      "path": "/employees",
+      "name": "jarvis-owners",
+      "path": "/jarvis-owners",
       "realmRoles": [
-        "ar:customer:read",
-        "ar:invoice:read",
-        "ar:receipt:read",
-        "authorization:assignment:read",
-        "authorization:role:read",
-        "expense:claim:read",
-        "expense:claim:read:all",
-        "governance:decision:read",
-        "governance:delegation:read",
-        "hr:asset:read",
-        "hr:document:read",
-        "hr:employee:read",
-        "hr:exit:read",
-        "hr:leave:policy:read",
-        "hr:leave:read",
-        "identity:access-review:read",
-        "identity:sync:read",
-        "masterdata:domain:read",
-        "masterdata:record:read",
-        "notification:outbox:read",
-        "notification:template:read",
-        "onboarding:read",
-        "organization:profile:read",
-        "organization:structure:read",
-        "payroll:accounting:read",
-        "payroll:compensation:read",
-        "payroll:read",
-        "procurement:request:read",
-        "procurement:request:read:all",
-        "register:budget:read",
-        "supplier:read",
-        "tms:timesheet:read",
-        "tms:timesheet:read:all",
-        "templates-member"
+        "jarvis-owner"
       ],
       "attributes": {
         "description": [
-          "Employees: read-level ASAA permissions (audit and ops excluded) and the Templates member role."
+          "JARVIS device enrollment owners."
+        ]
+      }
+    },
+    {
+      "name": "portfolio-admins",
+      "path": "/portfolio-admins",
+      "realmRoles": [
+        "portfolio-admin"
+      ],
+      "attributes": {
+        "description": [
+          "Portfolio administrators."
+        ]
+      }
+    },
+    {
+      "name": "templates-owners",
+      "path": "/templates-owners",
+      "realmRoles": [
+        "templates-owner"
+      ],
+      "attributes": {
+        "description": [
+          "Templates owners."
         ]
       }
     }
