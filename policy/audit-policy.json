@@ -8,43 +8,72 @@
     "rule": "Every audit record stores the sub of the acting user. Shared accounts are not allowed."
   },
   "retention": {
-    "status": "pending owner approval",
-    "provisionalKeycloakEventsExpirationSeconds": 7776000,
-    "provisionalNote": "Keycloak events are kept 90 days as a placeholder until the owner sets the retention period."
+    "status": "owner approved 2026-11-18",
+    "keycloakLoginAndAdminEventsDays": 90,
+    "keycloakEventsExpirationSeconds": 7776000,
+    "integrationEventsDays": 180,
+    "applicationAuditDays": 365,
+    "note": "Keycloak admin events share the realm eventsExpiration in this Keycloak version, so the 90-day period applies to both login and admin events."
   },
   "applications": [
     {
       "application": "ASAA",
       "store": "audit_events table (apps/ap-api/src/asaa_ap/models.py AuditEvent)",
-      "mustAudit": ["data changes in every module", "permission-protected actions", "approvals and rejections", "identity link and sync actions"],
+      "mustAudit": [
+        "data changes in every module",
+        "permission-protected actions",
+        "approvals and rejections",
+        "identity link and sync actions"
+      ],
       "forwardToEcosystem": true,
       "forwardMechanism": "asaa.event.v1 envelope POSTed to /api/v1/integration/events, with id as the idempotency key"
     },
     {
       "application": "Templates",
       "store": "AuditEvent model (apps/api/prisma/schema.prisma)",
-      "mustAudit": ["logins and session changes", "access requests and approvals", "template publication and review", "export and GitHub or deployment actions", "AI-assisted generation runs"],
+      "mustAudit": [
+        "logins and session changes",
+        "access requests and approvals",
+        "template publication and review",
+        "export and GitHub or deployment actions",
+        "AI-assisted generation runs"
+      ],
       "forwardToEcosystem": true,
       "forwardMechanism": "asaa.event.v1 envelope (producer prefix templates.)"
     },
     {
       "application": "JARVIS",
       "store": "hash-chained audit log (src/audit/audit.ts)",
-      "mustAudit": ["device pairing and enrollment", "approved and denied automation actions", "app launches and terminal or file changes", "security alerts"],
+      "mustAudit": [
+        "device pairing and enrollment",
+        "approved and denied automation actions",
+        "app launches and terminal or file changes",
+        "security alerts"
+      ],
       "forwardToEcosystem": true,
       "forwardMechanism": "asaa.event.v1 envelope (producer prefix jarvis.)"
     },
     {
       "application": "Portfolio",
       "store": "admin audit log (src/lib/admin-audit.ts, append-only from the application view)",
-      "mustAudit": ["admin login and logout", "content, profile and resume changes", "media uploads and deletions", "AI provider configuration changes"],
+      "mustAudit": [
+        "admin login and logout",
+        "content, profile and resume changes",
+        "media uploads and deletions",
+        "AI provider configuration changes"
+      ],
       "forwardToEcosystem": true,
       "forwardMechanism": "asaa.event.v1 envelope (producer prefix portfolio.)"
     },
     {
       "application": "Keycloak (identity)",
       "store": "Keycloak events and admin events of realm asaa (identity/realm/asaa-realm.json)",
-      "mustAudit": ["LOGIN and LOGIN_ERROR", "LOGOUT", "password and TOTP changes", "admin create, update and delete on users, roles and clients"],
+      "mustAudit": [
+        "LOGIN and LOGIN_ERROR",
+        "LOGOUT",
+        "password and TOTP changes",
+        "admin create, update and delete on users, roles and clients"
+      ],
       "forwardToEcosystem": false,
       "forwardMechanism": "Read locally by the owner. Forwarding to ASAA is pending a design decision."
     }
@@ -53,7 +82,16 @@
     "contract": "asaa.event.v1",
     "schemaFile": "../ASAA/contracts/ecosystem/v1/event-envelope.schema.json",
     "schemaFileNote": "Identical to the copy in the ASAA repository (verified by byte comparison on 2026-11-18).",
-    "requiredFields": ["specversion", "id", "source", "type", "time", "orgId", "project", "data"],
+    "requiredFields": [
+      "specversion",
+      "id",
+      "source",
+      "type",
+      "time",
+      "orgId",
+      "project",
+      "data"
+    ],
     "rule": "data must never carry secrets, credentials, tokens, raw personal data, or file contents. Maximum 16 KiB."
   },
   "mustNotAudit": [
