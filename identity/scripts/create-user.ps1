@@ -63,6 +63,8 @@ if ($Group -in $privileged) {
     if ($typed -cne "CONFIRM $Group") { throw 'Confirmation did not match. Nothing was created.' }
 }
 
+Write-Host 'NOTICE: employees should normally be created through ASAA''s HR joiner. Accounts created here must be adopted in ASAA before ASAA can manage them.'
+
 $state = Get-StateNoSecrets
 if ($state -in @('missing-file', 'placeholder', 'missing-key')) {
     throw 'identity/.env does not hold a valid admin setup. Run harden-master.ps1 first.'
