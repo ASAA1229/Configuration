@@ -1,0 +1,1495 @@
+{
+  "schema": "asaa.configuration.approved-dependencies.v1",
+  "description": "Owner-approved baseline of every npm, Python and Docker dependency in the ASAA project repositories at the time of this snapshot. Any later addition or change fails checks/check-dependency-approval.mjs until the owner approves it (policy/install-import-policy.json) and the snapshot is refreshed.",
+  "generatedBy": "checks/check-dependency-approval.mjs --snapshot",
+  "counts": {
+    "docker": 13,
+    "npm": 173,
+    "python": 1
+  },
+  "dependencies": [
+    {
+      "repo": "ASAA",
+      "ecosystem": "docker",
+      "manifest": "apps/ap-api/Dockerfile",
+      "section": "FROM",
+      "name": "python:3.12-slim"
+    },
+    {
+      "repo": "ASAA",
+      "ecosystem": "docker",
+      "manifest": "deploy/docker-compose.yml",
+      "section": "image",
+      "name": "asaa-api:${API_IMAGE_TAG:-rehearsal-1}"
+    },
+    {
+      "repo": "ASAA",
+      "ecosystem": "docker",
+      "manifest": "deploy/docker-compose.yml",
+      "section": "image",
+      "name": "asaa-api:${API_IMAGE_TAG:-rehearsal-1}"
+    },
+    {
+      "repo": "ASAA",
+      "ecosystem": "docker",
+      "manifest": "deploy/docker-compose.yml",
+      "section": "image",
+      "name": "asaa-portal:${PORTAL_IMAGE_TAG:-rehearsal-1}"
+    },
+    {
+      "repo": "ASAA",
+      "ecosystem": "docker",
+      "manifest": "deploy/docker-compose.yml",
+      "section": "image",
+      "name": "postgres:16"
+    },
+    {
+      "repo": "ASAA",
+      "ecosystem": "docker",
+      "manifest": "deploy/local-prod/docker-compose.yml",
+      "section": "image",
+      "name": "asaa-api:${API_IMAGE_TAG}"
+    },
+    {
+      "repo": "ASAA",
+      "ecosystem": "docker",
+      "manifest": "deploy/local-prod/docker-compose.yml",
+      "section": "image",
+      "name": "asaa-api:${API_IMAGE_TAG}"
+    },
+    {
+      "repo": "ASAA",
+      "ecosystem": "docker",
+      "manifest": "deploy/local-prod/docker-compose.yml",
+      "section": "image",
+      "name": "asaa-portal:${PORTAL_IMAGE_TAG}"
+    },
+    {
+      "repo": "ASAA",
+      "ecosystem": "docker",
+      "manifest": "Dockerfile.portal",
+      "section": "FROM",
+      "name": "nginx:1.27-alpine"
+    },
+    {
+      "repo": "ASAA",
+      "ecosystem": "docker",
+      "manifest": "Dockerfile.portal",
+      "section": "FROM",
+      "name": "node:22-alpine"
+    },
+    {
+      "repo": "ASAA",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "@axe-core/playwright",
+      "spec": "^4.14.0"
+    },
+    {
+      "repo": "ASAA",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "@eslint/js",
+      "spec": "^9.39.5"
+    },
+    {
+      "repo": "ASAA",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "@playwright/test",
+      "spec": "^1.65.0"
+    },
+    {
+      "repo": "ASAA",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "@testing-library/jest-dom",
+      "spec": "^6.9.1"
+    },
+    {
+      "repo": "ASAA",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "@testing-library/react",
+      "spec": "^16.3.3"
+    },
+    {
+      "repo": "ASAA",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "@testing-library/user-event",
+      "spec": "^14.6.10"
+    },
+    {
+      "repo": "ASAA",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "@vitejs/plugin-react",
+      "spec": "^4.3.4"
+    },
+    {
+      "repo": "ASAA",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "axe-core",
+      "spec": "^4.14.0"
+    },
+    {
+      "repo": "ASAA",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "eslint-plugin-react-hooks",
+      "spec": "^5.2.0"
+    },
+    {
+      "repo": "ASAA",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "eslint-plugin-react",
+      "spec": "^7.37.5"
+    },
+    {
+      "repo": "ASAA",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "eslint",
+      "spec": "^9.39.5"
+    },
+    {
+      "repo": "ASAA",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "globals",
+      "spec": "^17.14.0"
+    },
+    {
+      "repo": "ASAA",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "jsdom",
+      "spec": "^26.1.0"
+    },
+    {
+      "repo": "ASAA",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "lucide-react",
+      "spec": "^0.468.0"
+    },
+    {
+      "repo": "ASAA",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "react-dom",
+      "spec": "^18.3.1"
+    },
+    {
+      "repo": "ASAA",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "react",
+      "spec": "^18.3.1"
+    },
+    {
+      "repo": "ASAA",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "vite",
+      "spec": "^6.0.7"
+    },
+    {
+      "repo": "ASAA",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "vitest",
+      "spec": "^5.1.0"
+    },
+    {
+      "repo": "ASAA",
+      "ecosystem": "python",
+      "manifest": "apps/ap-api/pyproject.toml",
+      "section": "dependencies",
+      "name": "fastapi",
+      "spec": ">=0.115,<1.0"
+    },
+    {
+      "repo": "configuration",
+      "ecosystem": "docker",
+      "manifest": "identity/docker-compose.yml",
+      "section": "image",
+      "name": "quay.io/keycloak/keycloak:26.8.1"
+    },
+    {
+      "repo": "JARVIS",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@mediapipe/tasks-vision",
+      "spec": "1.1.1"
+    },
+    {
+      "repo": "JARVIS",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "@types/node",
+      "spec": "^24.19.2"
+    },
+    {
+      "repo": "JARVIS",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "@types/qrcode",
+      "spec": "1.5.5"
+    },
+    {
+      "repo": "JARVIS",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "otpauth",
+      "spec": "9.5.2"
+    },
+    {
+      "repo": "JARVIS",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "playwright-core",
+      "spec": "^1.64.1"
+    },
+    {
+      "repo": "JARVIS",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "qrcode",
+      "spec": "1.5.4"
+    },
+    {
+      "repo": "JARVIS",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "tsx",
+      "spec": "^4.19.2"
+    },
+    {
+      "repo": "JARVIS",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "typescript",
+      "spec": "^5.7.2"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "@capsizecss/metrics",
+      "spec": "^4.4.0"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "@eslint/js",
+      "spec": "^9.32.0"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@fontsource/barlow-condensed",
+      "spec": "^5.3.0"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@fontsource/jetbrains-mono",
+      "spec": "^5.3.0"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@fontsource/sora",
+      "spec": "^5.3.0"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@hookform/resolvers",
+      "spec": "^5.2.2"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "@lovable.dev/vite-tanstack-config",
+      "spec": "2.26.5"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "@playwright/test",
+      "spec": "^1.65.1"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@radix-ui/react-accordion",
+      "spec": "^1.2.12"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@radix-ui/react-alert-dialog",
+      "spec": "^1.1.15"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@radix-ui/react-aspect-ratio",
+      "spec": "^1.1.8"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@radix-ui/react-avatar",
+      "spec": "^1.1.11"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@radix-ui/react-checkbox",
+      "spec": "^1.3.3"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@radix-ui/react-collapsible",
+      "spec": "^1.1.12"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@radix-ui/react-context-menu",
+      "spec": "^2.2.16"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@radix-ui/react-dialog",
+      "spec": "^1.1.15"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@radix-ui/react-dropdown-menu",
+      "spec": "^2.1.16"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@radix-ui/react-hover-card",
+      "spec": "^1.1.15"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@radix-ui/react-label",
+      "spec": "^2.1.8"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@radix-ui/react-menubar",
+      "spec": "^1.1.16"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@radix-ui/react-navigation-menu",
+      "spec": "^1.2.14"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@radix-ui/react-popover",
+      "spec": "^1.1.15"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@radix-ui/react-progress",
+      "spec": "^1.1.8"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@radix-ui/react-radio-group",
+      "spec": "^1.3.8"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@radix-ui/react-scroll-area",
+      "spec": "^1.2.10"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@radix-ui/react-select",
+      "spec": "^2.2.6"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@radix-ui/react-separator",
+      "spec": "^1.1.8"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@radix-ui/react-slider",
+      "spec": "^1.3.6"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@radix-ui/react-slot",
+      "spec": "^1.2.4"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@radix-ui/react-switch",
+      "spec": "^1.2.6"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@radix-ui/react-tabs",
+      "spec": "^1.1.13"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@radix-ui/react-toggle-group",
+      "spec": "^1.1.11"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@radix-ui/react-toggle",
+      "spec": "^1.1.10"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@radix-ui/react-tooltip",
+      "spec": "^1.2.8"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@tailwindcss/vite",
+      "spec": "^4.2.1"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@tanstack/react-query",
+      "spec": "^5.101.1"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@tanstack/react-router",
+      "spec": "1.170.41"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@tanstack/react-start",
+      "spec": "1.168.60"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "@tanstack/router-plugin",
+      "spec": "1.168.42"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "@testing-library/jest-dom",
+      "spec": "^6.6.0"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "@testing-library/react",
+      "spec": "^16.0.0"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "@types/node",
+      "spec": "^22.16.5"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "@types/react-dom",
+      "spec": "^19.2.0"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "@types/react",
+      "spec": "^19.2.0"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "@vitejs/plugin-react",
+      "spec": "^5.2.0"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "@vitest/coverage-v8",
+      "spec": "^4.1.12"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "axe-core",
+      "spec": "^4.14.0"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "class-variance-authority",
+      "spec": "^0.7.1"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "clsx",
+      "spec": "^2.1.1"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "cmdk",
+      "spec": "^1.1.1"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "date-fns",
+      "spec": "^4.1.0"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "embla-carousel-react",
+      "spec": "^8.6.0"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "eslint-config-prettier",
+      "spec": "^10.1.1"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "eslint-plugin-prettier",
+      "spec": "^5.2.6"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "eslint-plugin-react-hooks",
+      "spec": "^5.2.0"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "eslint-plugin-react-refresh",
+      "spec": "^0.4.20"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "eslint",
+      "spec": "^9.32.0"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "framer-motion",
+      "spec": "^14.0.0"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "globals",
+      "spec": "^15.15.0"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "input-otp",
+      "spec": "^1.4.2"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "jsdom",
+      "spec": "^20.0.3"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "lucide-react",
+      "spec": "^0.575.0"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "miniflare",
+      "spec": "^4.20260730.0"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "nitro",
+      "spec": "3.0.260603-beta"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "playwright-core",
+      "spec": "^1.65.0"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "prettier",
+      "spec": "^3.7.3"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "react-day-picker",
+      "spec": "^9.14.0"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "react-dom",
+      "spec": "^19.2.0"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "react-hook-form",
+      "spec": "^7.71.2"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "react-resizable-panels",
+      "spec": "^4.6.5"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "react",
+      "spec": "^19.2.0"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "recharts",
+      "spec": "^2.15.4"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "sonner",
+      "spec": "^2.0.7"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "tailwind-merge",
+      "spec": "^3.5.0"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "tailwindcss",
+      "spec": "^4.2.1"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "tw-animate-css",
+      "spec": "^1.3.4"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "typescript-eslint",
+      "spec": "^8.72.2"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "typescript",
+      "spec": "^5.8.3"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "vaul",
+      "spec": "^1.1.2"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "vite-tsconfig-paths",
+      "spec": "^6.0.2"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "vite",
+      "spec": "8.3.8"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "vitest",
+      "spec": "^4.1.12"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "web-vitals",
+      "spec": "^6.2.3"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "wrangler",
+      "spec": "^4.162.0"
+    },
+    {
+      "repo": "Portfolio",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "dependencies",
+      "name": "zod",
+      "spec": "^4.6.7"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "docker",
+      "manifest": "deploy/local-prod/docker-compose.yml",
+      "section": "image",
+      "name": "templates-local-prod:current"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "docker",
+      "manifest": "deploy/local-prod/Dockerfile",
+      "section": "FROM",
+      "name": "node:24-alpine"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/api/package.json",
+      "section": "dependencies",
+      "name": "@asaa/contracts",
+      "spec": "0.1.0"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/api/package.json",
+      "section": "dependencies",
+      "name": "@prisma/client",
+      "spec": "6.19.3"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/api/package.json",
+      "section": "devDependencies",
+      "name": "@types/cookie-parser",
+      "spec": "1.4.10"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/api/package.json",
+      "section": "devDependencies",
+      "name": "@types/express",
+      "spec": "5.0.6"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/api/package.json",
+      "section": "devDependencies",
+      "name": "@types/node",
+      "spec": "24.19.2"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/api/package.json",
+      "section": "devDependencies",
+      "name": "@types/supertest",
+      "spec": "6.0.3"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/api/package.json",
+      "section": "devDependencies",
+      "name": "@vitest/coverage-v8",
+      "spec": "4.1.12"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/api/package.json",
+      "section": "dependencies",
+      "name": "cookie-parser",
+      "spec": "1.4.7"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/api/package.json",
+      "section": "dependencies",
+      "name": "express",
+      "spec": "5.3.0"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/api/package.json",
+      "section": "dependencies",
+      "name": "helmet",
+      "spec": "8.3.0"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/api/package.json",
+      "section": "devDependencies",
+      "name": "prisma",
+      "spec": "6.19.3"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/api/package.json",
+      "section": "devDependencies",
+      "name": "supertest",
+      "spec": "7.3.2"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/api/package.json",
+      "section": "devDependencies",
+      "name": "tsx",
+      "spec": "4.23.15"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/api/package.json",
+      "section": "devDependencies",
+      "name": "vitest",
+      "spec": "4.1.12"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/api/package.json",
+      "section": "dependencies",
+      "name": "zod",
+      "spec": "4.6.7"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/api/template-library/starter-api-service/1.0.0/files/package.json",
+      "section": "devDependencies",
+      "name": "@types/express",
+      "spec": "5.0.6"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/api/template-library/starter-api-service/1.0.0/files/package.json",
+      "section": "devDependencies",
+      "name": "@types/node",
+      "spec": "24.19.2"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/api/template-library/starter-api-service/1.0.0/files/package.json",
+      "section": "dependencies",
+      "name": "express",
+      "spec": "5.3.0"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/api/template-library/starter-api-service/1.0.0/files/package.json",
+      "section": "dependencies",
+      "name": "helmet",
+      "spec": "8.3.0"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/api/template-library/starter-api-service/1.0.0/files/package.json",
+      "section": "devDependencies",
+      "name": "tsx",
+      "spec": "4.23.15"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/api/template-library/starter-api-service/1.0.0/files/package.json",
+      "section": "devDependencies",
+      "name": "typescript",
+      "spec": "5.9.3"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/api/template-library/starter-web-app/1.0.0/files/package.json",
+      "section": "devDependencies",
+      "name": "@types/react-dom",
+      "spec": "19.1.7"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/api/template-library/starter-web-app/1.0.0/files/package.json",
+      "section": "devDependencies",
+      "name": "@types/react",
+      "spec": "19.1.10"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/api/template-library/starter-web-app/1.0.0/files/package.json",
+      "section": "devDependencies",
+      "name": "@vitejs/plugin-react",
+      "spec": "5.0.0"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/api/template-library/starter-web-app/1.0.0/files/package.json",
+      "section": "dependencies",
+      "name": "react-dom",
+      "spec": "19.1.1"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/api/template-library/starter-web-app/1.0.0/files/package.json",
+      "section": "dependencies",
+      "name": "react",
+      "spec": "19.1.1"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/api/template-library/starter-web-app/1.0.0/files/package.json",
+      "section": "devDependencies",
+      "name": "typescript",
+      "spec": "5.9.3"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/api/template-library/starter-web-app/1.0.0/files/package.json",
+      "section": "devDependencies",
+      "name": "vite",
+      "spec": "7.3.8"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/web/package.json",
+      "section": "dependencies",
+      "name": "@asaa/contracts",
+      "spec": "0.1.0"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/web/package.json",
+      "section": "devDependencies",
+      "name": "@axe-core/playwright",
+      "spec": "4.14.0"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/web/package.json",
+      "section": "devDependencies",
+      "name": "@playwright/test",
+      "spec": "1.65.0"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/web/package.json",
+      "section": "dependencies",
+      "name": "@radix-ui/react-label",
+      "spec": "2.1.17"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/web/package.json",
+      "section": "dependencies",
+      "name": "@radix-ui/react-slot",
+      "spec": "1.5.0"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/web/package.json",
+      "section": "devDependencies",
+      "name": "@tailwindcss/vite",
+      "spec": "4.3.5"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/web/package.json",
+      "section": "devDependencies",
+      "name": "@testing-library/dom",
+      "spec": "10.4.1"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/web/package.json",
+      "section": "devDependencies",
+      "name": "@testing-library/jest-dom",
+      "spec": "6.9.1"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/web/package.json",
+      "section": "devDependencies",
+      "name": "@testing-library/react",
+      "spec": "16.3.3"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/web/package.json",
+      "section": "devDependencies",
+      "name": "@testing-library/user-event",
+      "spec": "14.6.8"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/web/package.json",
+      "section": "devDependencies",
+      "name": "@types/react-dom",
+      "spec": "19.3.0"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/web/package.json",
+      "section": "devDependencies",
+      "name": "@types/react",
+      "spec": "19.3.0"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/web/package.json",
+      "section": "devDependencies",
+      "name": "@vitejs/plugin-react",
+      "spec": "5.2.0"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/web/package.json",
+      "section": "dependencies",
+      "name": "class-variance-authority",
+      "spec": "0.7.1"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/web/package.json",
+      "section": "dependencies",
+      "name": "clsx",
+      "spec": "2.1.1"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/web/package.json",
+      "section": "devDependencies",
+      "name": "jsdom",
+      "spec": "26.1.0"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/web/package.json",
+      "section": "dependencies",
+      "name": "lucide-react",
+      "spec": "0.577.0"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/web/package.json",
+      "section": "dependencies",
+      "name": "react-dom",
+      "spec": "19.1.10"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/web/package.json",
+      "section": "dependencies",
+      "name": "react-router",
+      "spec": "7.18.5"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/web/package.json",
+      "section": "dependencies",
+      "name": "react",
+      "spec": "19.1.10"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/web/package.json",
+      "section": "dependencies",
+      "name": "tailwind-merge",
+      "spec": "3.7.0"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/web/package.json",
+      "section": "devDependencies",
+      "name": "tailwindcss",
+      "spec": "4.3.5"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/web/package.json",
+      "section": "devDependencies",
+      "name": "vite",
+      "spec": "7.3.8"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "apps/web/package.json",
+      "section": "devDependencies",
+      "name": "vitest",
+      "spec": "4.1.12"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "@eslint/js",
+      "spec": "9.39.5"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "concurrently",
+      "spec": "9.2.5"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "eslint-plugin-react-hooks",
+      "spec": "5.2.0"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "eslint",
+      "spec": "9.39.5"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "globals",
+      "spec": "16.5.0"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "prettier",
+      "spec": "3.9.10"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "typescript-eslint",
+      "spec": "8.72.1"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "package.json",
+      "section": "devDependencies",
+      "name": "typescript",
+      "spec": "5.9.3"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "packages/contracts/package.json",
+      "section": "devDependencies",
+      "name": "vitest",
+      "spec": "4.1.12"
+    },
+    {
+      "repo": "Templates",
+      "ecosystem": "npm",
+      "manifest": "packages/contracts/package.json",
+      "section": "dependencies",
+      "name": "zod",
+      "spec": "4.6.7"
+    }
+  ]
+}

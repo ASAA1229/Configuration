@@ -1,0 +1,13 @@
+{
+  "schema": "asaa.configuration.install-import-approvals.v1",
+  "description": "Owner approval records for installs, images and imports. Each snapshot refresh cites one of these ids.",
+  "records": [
+    {
+      "id": "APPROVAL-2026-11-18-001",
+      "date": "2026-11-18",
+      "approver": "owner",
+      "what": "Baseline of the 18 Docker images in use on 2026-11-18 across the ASAA, Templates and configuration repositories",
+      "why": "Owner baseline. Agents must pin each image to an exact version and re-snapshot once pinned"
+    }
+  ]
+}
