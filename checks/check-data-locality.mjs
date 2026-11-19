@@ -3,8 +3,9 @@
 // Usage: node checks/check-data-locality.mjs
 
 import { existsSync, readFileSync } from "node:fs";
-import { join } from "node:path";
+import { basename, join } from "node:path";
 import { CONFIG_ROOT, PROJECT_REPOS, isLoopbackUrl, isLoopbackHost, parseEnvText, readJson, walkFiles } from "./lib/env.mjs";
+import { checkComposeBinds } from "./lib/compose.mjs";
 
 const ENV_FILE_NAMES = new Set([".env", ".env.local", ".env.local-prod", ".env.production", ".env.development", ".env.test", ".dev.vars", ".env.example"]);
 const TRUTHY = new Set(["1", "true", "yes", "on"]);
@@ -28,14 +29,15 @@ const MUST_BE_OFF = new Map([
 const BIND_KEYS = new Set(["HOST", "BIND_HOST", "BIND_ADDRESS", "LISTEN_HOST"]);
 
 // Evaluate one key/value. Returns a list of { ok, rule } results. Values are used in memory only.
-function evaluate(rawKey, rawValue) {
+// skipBind: compose files get their bind checks per service (checkComposeBinds), not per key.
+export function evaluate(rawKey, rawValue, skipBind = false) {
   const key = rawKey.toUpperCase();
   const value = String(rawValue).trim();
   const out = [];
   if (LOOPBACK_URL_KEYS.has(key) && value !== "") out.push({ ok: isLoopbackUrl(value), rule: `${key} is loopback` });
   if (MUST_BE_OFF.has(key)) out.push({ ok: MUST_BE_OFF.get(key)(value), rule: `${key} is off or empty` });
   if (key === "AI_PROVIDER" && value !== "") out.push({ ok: value === "ollama" || value === "jarvis", rule: "AI_PROVIDER is ollama or jarvis" });
-  if (BIND_KEYS.has(key) && value !== "") out.push({ ok: isLoopbackHost(value), rule: `${key} is loopback` });
+  if (!skipBind && BIND_KEYS.has(key) && value !== "") out.push({ ok: isLoopbackHost(value), rule: `${key} is loopback` });
   return out;
 }
 
@@ -80,10 +82,17 @@ export function run() {
       for (const m of text.matchAll(/^\s*-?\s*([A-Za-z_][A-Za-z0-9_]*)\s*[:=]\s*["']?([^"'\s#,]*)["']?/gm)) pairs.push([m[1], m[2]]);
       for (const m of text.matchAll(/"([A-Za-z_][A-Za-z0-9_]*)"\s*:\s*"([^"]*)"/g)) pairs.push([m[1], m[2]]);
       let checked = 0;
+      const isCompose = /^docker-compose|^compose/i.test(basename(file));
       for (const [k, v] of pairs) {
-        const results = evaluate(k, v);
+        const results = evaluate(k, v, isCompose);
         checked += results.length;
         for (const r of results) record(r.ok, `${repo.name} ${rel}: ${r.rule}`);
+      }
+      if (isCompose) {
+        for (const r of checkComposeBinds(text)) {
+          checked += 1;
+          record(r.ok, `${repo.name} ${rel}: ${r.rule}`);
+        }
       }
       lines.push(`    scanned ${rel} (${checked} rule checks)`);
     }
