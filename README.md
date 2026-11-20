@@ -58,3 +58,10 @@ The five standard branches are `main`, `dev`, `new`, `fix`, and `test`.
 ## Current status
 
 The current implementation is on `new` (23 tracked files at the 2026-11-19 audit snapshot). `main` and `dev` were documentation-only at that snapshot. The purpose and policy boundaries are described here; full operational acceptance, policy-owner review and integration into every consumer CI pipeline must be tracked separately.
+
+
+## Organization policy status — 2026-11-20
+
+The latest observed Organization Policy CI run on `new` failed: [run 44728022571](https://github.com/ASAA1229/Configuration/actions/runs/44728022571). Local policy checks recorded 10/10 unit tests passing and data-locality checks passing, while dependency approval failed with 22 findings. The approved dependency snapshot contains 187 entries; the current collected state contains 192, and 10 prior approved entries are no longer present.
+
+The findings include newly observed dependencies and local Docker image references using variable-based tags instead of exact immutable pins. Do not weaken IIP-3 or treat the prior `APPROVAL-2026-11-20-001` as blanket approval for new dependencies or mutable image references. The snapshot refresh is approved but not yet executed; review the exact delta before writing the refreshed snapshot. See [Policy Status](reports/POLICY_STATUS_2026-11-20.md).
