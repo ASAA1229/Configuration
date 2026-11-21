@@ -16,6 +16,7 @@ const APPROVALS_PATH = join(CONFIG_ROOT, "policy", "install-import-approvals.jso
 
 const ALL_REPOS = [...PROJECT_REPOS, { name: "configuration", path: CONFIG_ROOT }];
 const NPM_SECTIONS = ["dependencies", "devDependencies", "optionalDependencies", "peerDependencies"];
+const TEMPLATE_LOCAL_IMAGE = "templates-local-prod:${TEMPLATES_IMAGE_TAG:?set by common.ps1 (version-derived tag)}";
 
 function collectNpm(repo) {
   const found = [];
@@ -87,10 +88,48 @@ function collectDocker(repo) {
         if (m[2]) stages.add(m[2].toLowerCase());
       }
     } else {
-      for (const m of text.matchAll(/^\s*image:\s*["']?([^"'\s#]+)/gim)) found.push({ repo: repo.name, ecosystem: "docker", manifest, section: "image", name: m[1] });
+      for (const line of text.split(/\r?\n/)) {
+        const image = parseComposeImage(line);
+        if (image) found.push({ repo: repo.name, ecosystem: "docker", manifest, section: "image", name: image });
+      }
     }
   }
   return found;
+}
+
+export function parseComposeImage(line) {
+  const match = /^\s*image:\s*(?:"([^"]*)"|'([^']*)'|(.+?))\s*(?:#.*)?$/i.exec(line);
+  return (match?.[1] ?? match?.[2] ?? match?.[3] ?? "").trim() || null;
+}
+
+function isFixedTag(tag) {
+  return /^\d+\.\d+(?:\.\d+)?(?:-[a-z0-9][a-z0-9.]*)?$/i.test(tag)
+    || /^rehearsal-\d+$/i.test(tag);
+}
+
+function hasVersionDerivedTemplateTagSource() {
+  const templates = PROJECT_REPOS.find((repo) => repo.name === "Templates");
+  if (!templates) return false;
+  const sourcePath = join(templates.path, "deploy", "local-prod", "common.ps1");
+  if (!existsSync(sourcePath)) return false;
+  const source = readFileSync(sourcePath, "utf8");
+  return source.includes("function Get-ImageVersionTag")
+    && source.includes('return "$version-$sha"')
+    && source.includes("$env:TEMPLATES_IMAGE_TAG = if ($runningTag) { $runningTag } else { Get-ImageVersionTag }");
+}
+
+export function isExactDockerTag(image, { versionDerivedTemplateTag = false } = {}) {
+  if (/@sha256:[a-f0-9]{64}$/.test(image)) return true;
+
+  const variable = /:\$\{([A-Z_][A-Z0-9_]*)(?::-([^}]+)|:\?([^}]+))\}$/.exec(image);
+  if (variable) {
+    if (variable[2] !== undefined) return isFixedTag(variable[2]);
+    return image === TEMPLATE_LOCAL_IMAGE && versionDerivedTemplateTag;
+  }
+
+  const lastColon = image.lastIndexOf(":");
+  if (lastColon <= image.lastIndexOf("/")) return false;
+  return isFixedTag(image.slice(lastColon + 1));
 }
 
 export function collectAll() {
@@ -156,12 +195,12 @@ export function run() {
   const install = readJson(INSTALL_POLICY_PATH);
   const approvedImages = new Set(install.approvedDockerImages.map((i) => i.image));
   const seenImages = new Set();
+  const versionDerivedTemplateTag = hasVersionDerivedTemplateTagSource();
   for (const d of current.filter((x) => x.ecosystem === "docker")) {
     const id = `${d.repo} ${d.name}`;
     if (seenImages.has(id)) continue;
     seenImages.add(id);
-    const exactTag = /:\d+\.\d+(\.\d+)?(-[a-z0-9.]+)?(@sha256:[a-f0-9]{64})?$/.test(d.name) || /@sha256:[a-f0-9]{64}$/.test(d.name);
-    if (!exactTag) failures.push(`UNPINNED   ${d.repo}: image ${d.name} (exact version tag or digest required, see IIP-3)`);
+    if (!isExactDockerTag(d.name, { versionDerivedTemplateTag })) failures.push(`UNPINNED   ${d.repo}: image ${d.name} (exact tag or digest required, see IIP-3)`);
     if (!approvedImages.has(d.name)) failures.push(`NOT APPROVED ${d.repo}: image ${d.name} (owner approval record required, see IIP-4)`);
   }
 

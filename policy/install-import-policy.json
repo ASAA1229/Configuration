@@ -102,6 +102,20 @@
       "approvedDate": "2026-11-20"
     },
     {
+      "image": "asaa-api:${API_IMAGE_TAG:-rehearsal-1}",
+      "purpose": "ASAA local rehearsal API image built by deploy/rehearsal.sh",
+      "approvalId": "APPROVAL-2026-11-20-001",
+      "approvedBy": "ASAA1229 owner",
+      "approvedDate": "2026-11-20"
+    },
+    {
+      "image": "asaa-portal:${PORTAL_IMAGE_TAG:-rehearsal-1}",
+      "purpose": "ASAA local rehearsal portal image built by deploy/rehearsal.sh",
+      "approvalId": "APPROVAL-2026-11-20-001",
+      "approvedBy": "ASAA1229 owner",
+      "approvedDate": "2026-11-20"
+    },
+    {
       "image": "nginx:1.27.5-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10",
       "purpose": "ASAA portal Nginx runtime image",
       "approvalId": "APPROVAL-2026-11-20-001",
@@ -116,7 +130,7 @@
       "approvedDate": "2026-11-20"
     },
     {
-      "image": "templates-local-prod:${TEMPLATES_IMAGE_TAG:?set",
+      "image": "templates-local-prod:${TEMPLATES_IMAGE_TAG:?set by common.ps1 (version-derived tag)}",
       "purpose": "Templates local production image reference; variable must resolve to immutable approved image",
       "approvalId": "APPROVAL-2026-11-20-001",
       "approvedBy": "ASAA1229 owner",
