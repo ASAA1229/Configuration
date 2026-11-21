@@ -4,7 +4,7 @@ on:
   push:
     branches: [new]
   pull_request:
-    branches: [dev, main]
+    branches: [new, dev, main]
   workflow_dispatch:
 
 permissions:
@@ -60,7 +60,7 @@ jobs:
 
       - name: Run Configuration unit tests
         working-directory: Configuration
-        run: node --test checks/test/
+        run: node --test checks/test/*.test.mjs
 
       - name: Run cross-repository policy checks
         working-directory: Configuration
