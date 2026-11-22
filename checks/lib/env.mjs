@@ -6,7 +6,9 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 export const CONFIG_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
-export const WORKSPACE_ROOT = resolve(CONFIG_ROOT, "..");
+// The project repositories are sibling checkouts of this repository. ASAA_WORKSPACE_ROOT overrides the location
+// (for example when CI checks the repositories out somewhere else).
+export const WORKSPACE_ROOT = process.env.ASAA_WORKSPACE_ROOT ? resolve(process.env.ASAA_WORKSPACE_ROOT) : resolve(CONFIG_ROOT, "..");
 
 export const PROJECT_REPOS = [
   { name: "ASAA", path: join(WORKSPACE_ROOT, "ASAA") },

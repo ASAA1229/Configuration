@@ -6,6 +6,49 @@ import { existsSync, readFileSync } from "node:fs";
 import { basename, join } from "node:path";
 import { CONFIG_ROOT, PROJECT_REPOS, isLoopbackUrl, isLoopbackHost, parseEnvText, readJson, walkFiles } from "./lib/env.mjs";
 import { checkComposeBinds } from "./lib/compose.mjs";
+import { createFinding, summarize } from "./lib/findings.mjs";
+
+// Enforcement map: every policy rule id is enforced by at least one evaluator below. A policy rule without an entry
+// here is reported as DL-RULE-UNENFORCED so a new rule cannot be added to the policy and silently skipped.
+export const RULE_FOR_KEY = {
+  OLLAMA_URL: "DL-AI-OLLAMA",
+  JARVIS_AI_URL: "DL-AI-JARVIS-LOOPBACK",
+  JARVIS_AI_BASE_URL: "DL-AI-JARVIS-LOOPBACK",
+  AI_PROVIDER: "DL-AI-JARVIS-GATEWAY",
+  JARVIS_CLOUD_OPENAI_API_KEY: "DL-CLOUD-KEYS-UNSET",
+  JARVIS_CLOUD_ANTHROPIC_API_KEY: "DL-CLOUD-KEYS-UNSET",
+  JARVIS_CLOUD_OPENAI_BASE_URL: "DL-CLOUD-KEYS-UNSET",
+  JARVIS_CLOUD_ANTHROPIC_BASE_URL: "DL-CLOUD-KEYS-UNSET",
+  JARVIS_CLOUD_ALLOWED_TASKS: "DL-CLOUD-ALLOWED-TASKS",
+  JARVIS_ALLOW_CLOUD_SPEECH: "DL-CLOUD-SPEECH-OFF",
+  JARVIS_SITE_GATEWAY_ALLOW_CLOUD: "DL-CLOUD-SITE-GATEWAY-OFF",
+  JARVIS_AI_ALLOW_REMOTE: "DL-AI-JARVIS-LOOPBACK",
+  PORTFOLIO_AI_ALLOW_PAID_FALLBACK: "DL-PAID-FALLBACK-OFF",
+  OPENAI_API_KEY: "DL-OPENAI-KEY-UNSET",
+  HOST: "DL-BIND-LOOPBACK",
+  BIND_HOST: "DL-BIND-LOOPBACK",
+  BIND_ADDRESS: "DL-BIND-LOOPBACK",
+  LISTEN_HOST: "DL-BIND-LOOPBACK",
+  ASAA_EVENTS_URL: "DL-BIND-LOOPBACK",
+  ASAA_EVENTS_TOKEN_URL: "DL-BIND-LOOPBACK",
+  JARVIS_OIDC_ISSUER: "DL-IDP-DISABLED",
+  PORTFOLIO_OIDC_ISSUER: "DL-IDP-DISABLED",
+  ASAA_IDENTITY_KEYCLOAK_URL: "DL-IDP-DISABLED",
+};
+const ENFORCED_RULES = new Set([...Object.values(RULE_FOR_KEY), "DL-IDP-DISABLED"]);
+
+function ruleForLabel(label) {
+  const key = /:\s(?:realm\s)?([A-Z_][A-Z0-9_]*)\s/.exec(label)?.[1];
+  if (label.includes("realm identityProvider") || label.includes("realm self-registration")) return "DL-IDP-DISABLED";
+  if (label.includes("published port must be loopback")) return "DL-BIND-LOOPBACK";
+  if (label.includes("code default")) {
+    if (label.includes("OLLAMA_URL")) return label.startsWith("JARVIS") ? "DL-AI-OLLAMA" : "DL-AI-JARVIS-GATEWAY";
+    if (label.includes("JARVIS_AI_URL") || label.includes("AI_PROVIDER")) return "DL-AI-JARVIS-GATEWAY";
+    if (label.includes("CLOUD_ALLOWED_TASKS")) return "DL-CLOUD-ALLOWED-TASKS";
+    if (label.includes("paid fallback")) return "DL-PAID-FALLBACK-OFF";
+  }
+  return (key && RULE_FOR_KEY[key]) ?? "DL";
+}
 
 const ENV_FILE_NAMES = new Set([".env", ".env.local", ".env.local-prod", ".env.production", ".env.development", ".env.test", ".dev.vars", ".env.example"]);
 const TRUTHY = new Set(["1", "true", "yes", "on"]);
@@ -47,12 +90,26 @@ function stripBom(text) {
 
 export function run() {
   const policy = readJson(join(CONFIG_ROOT, "policy", "data-locality-policy.json"));
+  for (const name of policy.scannedFiles ?? []) ENV_FILE_NAMES.add(name);
   const failures = [];
   const lines = [];
+  const findings = [];
   const record = (ok, label) => {
     lines.push(`${ok ? "PASS" : "FAIL"}  ${label}`);
-    if (!ok) failures.push(label);
+    if (!ok) {
+      failures.push(label);
+      const repo = /^(ASAA|JARVIS|Templates|Portfolio)\b/.exec(label)?.[1] ?? null;
+      const rule = ruleForLabel(label);
+      const severity = (policy.rules.find((r) => r.id === rule)?.severity ?? "fail") === "fail" ? "error" : "warning";
+      findings.push(createFinding({ code: "DL-VIOLATION", severity, repo, subject: label, policyRule: rule, message: label, remediation: policy.rules.find((r) => r.id === rule)?.requirement ?? null }));
+    }
   };
+  for (const rule of policy.rules) {
+    if (!ENFORCED_RULES.has(rule.id)) {
+      findings.push(createFinding({ code: "DL-RULE-UNENFORCED", severity: "warning", subject: rule.id, policyRule: rule.id, message: `policy rule ${rule.id} has no evaluator in check-data-locality.mjs` }));
+      lines.push(`WARN  policy rule ${rule.id} has no evaluator`);
+    }
+  }
 
   for (const repo of PROJECT_REPOS) {
     lines.push(`--- ${repo.name}`);
@@ -139,9 +196,10 @@ export function run() {
   for (const idp of realm.identityProviders ?? []) record(idp.enabled === false, `realm identityProvider ${idp.alias} is disabled`);
   record(realm.registrationAllowed === false, "realm self-registration is off");
 
-  lines.push(`policy rules loaded: ${policy.rules.length}`);
-  lines.push(failures.length === 0 ? "data-locality: PASS" : `data-locality: FAIL (${failures.length} violation(s))`);
-  return { ok: failures.length === 0, lines };
+  lines.push(`policy rules loaded: ${policy.rules.length}, enforced: ${policy.rules.filter((r) => ENFORCED_RULES.has(r.id)).length}`);
+  const summary = summarize(findings);
+  lines.push(summary.gate === "pass" ? "data-locality: PASS" : `data-locality: FAIL (${failures.length} violation(s))`);
+  return { ok: summary.gate === "pass", lines, findings, summary };
 }
 
 if (process.argv[1]?.endsWith("check-data-locality.mjs")) {

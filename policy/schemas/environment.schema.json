@@ -1,0 +1,85 @@
+{
+  "$id": "asaa.configuration.environment.v1",
+  "type": "object",
+  "required": ["schema", "name"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "asaa.configuration.environment.v1" },
+    "name": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+    "extends": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+    "abstract": { "type": "boolean" },
+    "workspace": { "enum": ["sibling-checkouts"] },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "realm": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "keycloakBaseUrl": { "type": "string", "pattern": "^https?://(127\\.0\\.0\\.1|localhost|\\[::1\\])(:\\d+)?$" },
+        "issuer": { "type": "string", "pattern": "^https?://(127\\.0\\.0\\.1|localhost|\\[::1\\])(:\\d+)?/realms/[a-z0-9-]+$" },
+        "bootstrapAdminPasswordRef": { "$ref": "#/$defs/secretRef" }
+      }
+    },
+    "dataLocality": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "policy": { "const": "policy/data-locality-policy.json" },
+        "loopbackOnly": { "const": true }
+      }
+    },
+    "checks": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemas": { "const": "fail" },
+        "dataLocality": { "const": "fail" },
+        "dependencyApproval": { "const": "fail" },
+        "approvals": { "const": "fail" },
+        "secretReferences": { "const": "fail" },
+        "drift": { "enum": ["fail", "warn"] }
+      }
+    },
+    "drift": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "worktree": { "type": "boolean" },
+        "ledger": { "type": "boolean" },
+        "projectEnvironment": { "type": "boolean" }
+      }
+    },
+    "projects": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ASAA": { "$ref": "#/$defs/project" },
+        "JARVIS": { "$ref": "#/$defs/project" },
+        "Templates": { "$ref": "#/$defs/project" },
+        "Portfolio": { "$ref": "#/$defs/project" }
+      }
+    }
+  },
+  "$defs": {
+    "secretRef": { "type": "string", "pattern": "^secret://(env/[A-Za-z_][A-Za-z0-9_]*|file/[^/\\s][^\\s]*)$" },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "expect": {
+          "type": "array",
+          "x-uniqueBy": "key",
+          "items": {
+            "type": "object",
+            "required": ["key", "equals"],
+            "additionalProperties": false,
+            "properties": {
+              "key": { "type": "string", "pattern": "^[A-Z_][A-Z0-9_]*$" },
+              "equals": { "type": "string" },
+              "whenSet": { "type": "boolean" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

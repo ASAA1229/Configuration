@@ -86,6 +86,50 @@ function Invoke-KcApi {
     return Invoke-RestMethod -Method $Method -Uri $uri -Headers $headers -TimeoutSec 30
 }
 
+# Waits until the realm's OIDC discovery document answers on loopback. Returns $true when ready, $false on timeout.
+function Wait-KeycloakReady {
+    param([int]$TimeoutSec = 180, [int]$IntervalSec = 5)
+    $deadline = (Get-Date).AddSeconds($TimeoutSec)
+    $url = "$script:KeycloakBase/realms/$script:Realm/.well-known/openid-configuration"
+    while ((Get-Date) -lt $deadline) {
+        try {
+            $null = Invoke-RestMethod -Uri $url -TimeoutSec 5
+            return $true
+        } catch {
+            Start-Sleep -Seconds $IntervalSec
+        }
+    }
+    return $false
+}
+
+# Returns the compose service state: 'running', 'exited', 'missing' or another Docker state string.
+function Get-KeycloakContainerState {
+    $state = & docker inspect --format '{{.State.Status}}' asaa-keycloak 2>$null
+    if ($LASTEXITCODE -ne 0 -or -not $state) { return 'missing' }
+    return $state.Trim()
+}
+
+# Replaces every credential-bearing field in an exported realm object with a mask, recursively.
+function Remove-ExportSecrets {
+    param($Node)
+    if ($null -eq $Node) { return }
+    if ($Node -is [System.Collections.IEnumerable] -and $Node -isnot [string]) {
+        foreach ($item in $Node) { Remove-ExportSecrets -Node $item }
+        return
+    }
+    if ($Node -is [pscustomobject]) {
+        foreach ($prop in @($Node.PSObject.Properties)) {
+            if ($prop.Name -match '^(secret|hashedSaltedValue|salt|privateKey|clientSecret|password|secretData|credentialData)$' -and $prop.Value -is [string] -and $prop.Value -ne '') {
+                $prop.Value = '**********'
+            } elseif ($prop.Name -eq 'credentials') {
+                $prop.Value = @()
+            } else {
+                Remove-ExportSecrets -Node $prop.Value
+            }
+        }
+    }
+}
+
 function Get-StateNoSecrets {
     # Returns 'missing-file', 'missing-key', 'placeholder', 'too-short' or 'ok' for the bootstrap password in identity/.env.
     # The value itself is never returned.

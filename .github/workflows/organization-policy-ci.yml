@@ -6,6 +6,13 @@ on:
   pull_request:
     branches: [new, dev, main]
   workflow_dispatch:
+  # Reusable entry point so each project repository can run the same policy gate on its own pull requests.
+  workflow_call:
+    inputs:
+      configuration-ref:
+        description: Configuration ref that holds the policy (defaults to new)
+        type: string
+        default: new
 
 permissions:
   contents: read
@@ -23,6 +30,8 @@ jobs:
       - name: Check out Configuration
         uses: actions/checkout@v4
         with:
+          repository: ASAA1229/Configuration
+          ref: ${{ inputs.configuration-ref || github.ref }}
           path: Configuration
 
       - name: Check out ASAA
@@ -64,4 +73,15 @@ jobs:
 
       - name: Run cross-repository policy checks
         working-directory: Configuration
-        run: node checks/check-all.mjs
+        env:
+          ASAA_CONFIG_ENV: ci
+        run: node checks/check-all.mjs --env ci --out policy-report.json
+
+      - name: Upload machine-readable policy report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: policy-report
+          path: Configuration/policy-report.json
+          if-no-files-found: warn
+          retention-days: 30
