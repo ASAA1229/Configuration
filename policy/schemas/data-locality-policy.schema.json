@@ -1,0 +1,25 @@
+{
+  "$id": "asaa.configuration.data-locality-policy.v1",
+  "type": "object",
+  "required": ["schema", "rules", "loopbackHosts"],
+  "properties": {
+    "schema": { "const": "asaa.configuration.data-locality-policy.v1" },
+    "loopbackHosts": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string" } },
+    "principles": { "type": "array", "x-uniqueBy": "id", "items": { "type": "object", "required": ["id", "description"] } },
+    "rules": {
+      "type": "array",
+      "minItems": 1,
+      "x-uniqueBy": "id",
+      "items": {
+        "type": "object",
+        "required": ["id", "project", "source", "requirement", "severity"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^DL-[A-Z0-9-]+$" },
+          "project": { "enum": ["ASAA", "JARVIS", "Templates", "Portfolio", "configuration", "all"] },
+          "severity": { "enum": ["fail", "warn"] }
+        }
+      }
+    },
+    "scannedFiles": { "type": "array", "items": { "type": "string" } }
+  }
+}

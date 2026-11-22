@@ -1,0 +1,51 @@
+{
+  "schema": "asaa.configuration.environment.v1",
+  "name": "base",
+  "abstract": true,
+  "identity": {
+    "realm": "asaa",
+    "keycloakBaseUrl": "http://127.0.0.1:8280",
+    "issuer": "http://127.0.0.1:8280/realms/asaa",
+    "bootstrapAdminPasswordRef": "secret://env/KC_BOOTSTRAP_ADMIN_PASSWORD"
+  },
+  "dataLocality": {
+    "policy": "policy/data-locality-policy.json",
+    "loopbackOnly": true
+  },
+  "checks": {
+    "schemas": "fail",
+    "dataLocality": "fail",
+    "dependencyApproval": "fail",
+    "approvals": "fail",
+    "secretReferences": "fail",
+    "drift": "warn"
+  },
+  "drift": {
+    "worktree": true,
+    "ledger": true,
+    "projectEnvironment": true
+  },
+  "projects": {
+    "ASAA": {
+      "expect": [
+        { "key": "ASAA_AP_JWT_ISSUER", "equals": "${identity.issuer}", "whenSet": true },
+        { "key": "VITE_OIDC_AUTHORITY", "equals": "${identity.issuer}", "whenSet": true },
+        { "key": "ASAA_IDENTITY_KEYCLOAK_URL", "equals": "${identity.keycloakBaseUrl}", "whenSet": true },
+        { "key": "ASAA_IDENTITY_KEYCLOAK_REALM", "equals": "${identity.realm}", "whenSet": true }
+      ]
+    },
+    "JARVIS": {
+      "expect": [
+        { "key": "JARVIS_OIDC_ISSUER", "equals": "${identity.issuer}", "whenSet": true }
+      ]
+    },
+    "Templates": {
+      "expect": []
+    },
+    "Portfolio": {
+      "expect": [
+        { "key": "PORTFOLIO_OIDC_ISSUER", "equals": "${identity.issuer}", "whenSet": true }
+      ]
+    }
+  }
+}

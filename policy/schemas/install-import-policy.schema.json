@@ -1,0 +1,41 @@
+{
+  "$id": "asaa.configuration.install-import-policy.v1",
+  "type": "object",
+  "required": ["schema", "rules", "approvedDockerImages"],
+  "properties": {
+    "schema": { "const": "asaa.configuration.install-import-policy.v1" },
+    "rules": {
+      "type": "array",
+      "minItems": 1,
+      "x-uniqueBy": "id",
+      "items": {
+        "type": "object",
+        "required": ["id", "rule", "severity"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^IIP-\\d+$" },
+          "rule": { "type": "string", "minLength": 1 },
+          "severity": { "enum": ["fail", "warn"] }
+        }
+      }
+    },
+    "approvedDockerImages": {
+      "type": "array",
+      "x-uniqueBy": "image",
+      "items": {
+        "type": "object",
+        "required": ["image", "approvalId"],
+        "properties": {
+          "image": { "type": "string", "minLength": 1 },
+          "approvalId": { "type": "string", "minLength": 1 },
+          "purpose": { "type": "string" }
+        }
+      }
+    },
+    "approvedTools": {
+      "type": "array",
+      "items": { "type": "object", "required": ["tool", "approvalId"] }
+    },
+    "approvedDependencySnapshot": { "const": "policy/approved-dependencies.json" },
+    "approvalRecords": { "type": "array" }
+  }
+}
