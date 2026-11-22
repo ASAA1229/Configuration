@@ -147,6 +147,88 @@ export function buildApprovalRequest(findings, { requestedBy, reason, now = new 
   };
 }
 
+// Approval-record discrepancies (conflicting copies, cited approvals without a record, an image approved under several
+// records) are owner decisions. They are collected into a request of kind "discrepancy" so they are tracked until the
+// owner acts; nothing here changes a record.
+export const DISCREPANCY_CODES = ["APR-RECORD-CONFLICT", "APR-REFERENCE-MISSING", "APR-IMAGE-CONFLICT", "APR-RECORD-DUPLICATE", "APR-RECORD-INVALID"];
+
+const DISCREPANCY_OPTIONS = {
+  "APR-RECORD-CONFLICT": [
+    "keep the record-file wording: config-cli approvals resolve-conflict --id <id> --keep record-file --decided-by <owner> --owner-confirmed",
+    "keep the inline policy wording: config-cli approvals resolve-conflict --id <id> --keep policy-inline --decided-by <owner> --owner-confirmed",
+  ],
+  "APR-REFERENCE-MISSING": [
+    "record the cited approval: config-cli approvals record --id <id> --approver <owner> --what <text> --why <text> --owner-confirmed",
+    "or change the citation in policy/install-import-policy.json to an existing approval (policy change, owner only)",
+  ],
+  "APR-IMAGE-CONFLICT": ["the owner decides which approval record covers the image and updates approvedDockerImages"],
+  "APR-RECORD-DUPLICATE": ["the owner removes or renumbers the duplicate record"],
+  "APR-RECORD-INVALID": ["the owner completes the record fields"],
+};
+
+export function buildDiscrepancyRequest(findings, { requestedBy, reason, now = new Date() }) {
+  const items = findings
+    .filter((f) => DISCREPANCY_CODES.includes(f.code))
+    .map((f) => ({ findingId: f.id, code: f.code, subject: f.subject, message: f.message, ownerAction: f.ownerAction, ownerOptions: DISCREPANCY_OPTIONS[f.code] ?? [] }));
+  if (items.length === 0) return null;
+  const digest = createHash("sha256").update(JSON.stringify(items.map((i) => i.findingId))).digest("hex").slice(0, 8).toUpperCase();
+  return {
+    id: `REQ-${now.toISOString().slice(0, 10).replace(/-/g, "")}-${digest}`,
+    kind: "discrepancy",
+    status: "pending-owner",
+    createdAt: now.toISOString(),
+    requestedBy: requestedBy ?? "automation",
+    reason: reason ?? "approval-record discrepancies detected by check-dependency-approval",
+    items,
+  };
+}
+
+// Marks request items whose finding no longer occurs as resolved, and a request whose items are all resolved as
+// "resolved". Approval requests (kind dependency) are only closed by an owner decision, never by this sync.
+export function syncDiscrepancyRequests(store, findings, now = new Date()) {
+  const open = new Set(findings.map((f) => f.id));
+  const changed = [];
+  for (const req of store.requests ?? []) {
+    if (req.kind !== "discrepancy" || req.status !== "pending-owner") continue;
+    for (const item of req.items) {
+      if (!item.resolvedAt && !open.has(item.findingId)) { item.resolvedAt = now.toISOString(); changed.push(`${req.id}:${item.findingId}`); }
+    }
+    if (req.items.every((i) => i.resolvedAt)) { req.status = "resolved"; req.decidedAt = now.toISOString().slice(0, 10); changed.push(req.id); }
+  }
+  return changed;
+}
+
+// Points each discrepancy finding at the pending request that tracks it. Severity is unchanged: the discrepancy is
+// still open until the owner resolves it.
+export function annotateWithRequests(findings, store) {
+  const tracking = new Map();
+  for (const req of store.requests ?? []) {
+    if (req.status !== "pending-owner") continue;
+    for (const item of req.items ?? []) if (item.findingId && !item.resolvedAt) tracking.set(item.findingId, req.id);
+  }
+  return findings.map((f) => (tracking.has(f.id) ? { ...f, data: { ...(f.data ?? {}), requestId: tracking.get(f.id) }, message: `${f.message} [awaiting owner decision in ${tracking.get(f.id)}]` } : f));
+}
+
+// OWNER ONLY: resolves a conflict between the record file and the inline copy in install-import-policy.json by
+// copying the required fields of the copy the owner keeps into the other copy. Requires ownerConfirmed=true.
+export function resolveRecordConflict({ approvalsPath, policyPath, id, keep, decidedBy, ownerConfirmed }) {
+  if (ownerConfirmed !== true) return { ok: false, error: "resolving an approval conflict requires explicit owner confirmation (--owner-confirmed)" };
+  if (!["record-file", "policy-inline"].includes(keep)) return { ok: false, error: "--keep must be record-file or policy-inline" };
+  if (!decidedBy) return { ok: false, error: "--decided-by is required" };
+  const approvals = JSON.parse(readFileSync(approvalsPath, "utf8"));
+  const policy = JSON.parse(readFileSync(policyPath, "utf8"));
+  const fileRec = (approvals.records ?? []).find((r) => r.id === id);
+  const inlineRec = (policy.approvalRecords ?? []).find((r) => r.id === id);
+  if (!fileRec || !inlineRec) return { ok: false, error: `approval ${id} must exist in both copies to resolve a conflict` };
+  const [from, to] = keep === "record-file" ? [fileRec, inlineRec] : [inlineRec, fileRec];
+  const changed = REQUIRED_RECORD_FIELDS.filter((f) => (from[f] ?? "") !== (to[f] ?? ""));
+  if (changed.length === 0) return { ok: true, changed: [], file: null };
+  for (const f of changed) to[f] = from[f];
+  const target = keep === "record-file" ? policyPath : approvalsPath;
+  writeFileSync(target, JSON.stringify(keep === "record-file" ? policy : approvals, null, 2) + "\n");
+  return { ok: true, changed, file: target };
+}
+
 export function addRequest(path, request) {
   const store = loadRequests(path);
   if (store.requests.some((r) => r.id === request.id)) return { added: false, store };
@@ -158,7 +240,7 @@ export function addRequest(path, request) {
 export function pendingRequestFindings(store) {
   return (store.requests ?? []).filter((r) => r.status === "pending-owner").map((r) => createFinding({
     code: "APR-REQUEST-PENDING", severity: "info", subject: r.id, file: "policy/approval-requests.json",
-    message: `approval request ${r.id} (${r.items.length} item(s)) is waiting for an owner decision`,
+    message: `${r.kind === "discrepancy" ? "discrepancy" : "approval"} request ${r.id} (${r.items.filter((i) => !i.resolvedAt).length} open item(s)) is waiting for an owner decision`,
   }));
 }
 
