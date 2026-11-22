@@ -120,6 +120,18 @@
       "recordedAt": "2026-11-22T06:02:16.336Z",
       "prevEntryHash": "3ce0aa4b45af619b89d5eb4c84f369bf2b519ca504030eec296e84e280ac06c4",
       "entryHash": "a70569a7b040b78ccd507961d2574ffc7ec19e36d41de0b7bf2877b0124436db"
+    },
+    {
+      "seq": 11,
+      "file": "policy/approval-requests.json",
+      "sha256": "bd549f667510aa3047c12e367768f159a1f1c8c61da9f8cd839f3173ef47c0b1",
+      "action": "request",
+      "reason": "discrepancy request REQ-20261122-8F2C2ECE created",
+      "approvalId": null,
+      "actor": "automation",
+      "recordedAt": "2026-11-22T10:50:57.817Z",
+      "prevEntryHash": "a70569a7b040b78ccd507961d2574ffc7ec19e36d41de0b7bf2877b0124436db",
+      "entryHash": "7c5433c8dae2a103c7f2d5225fa349c2c705a2e61c32163078cc58bd9d7bbaa0"
     }
   ]
 }

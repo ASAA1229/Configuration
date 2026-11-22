@@ -5,8 +5,10 @@
 //   (default)                     : compares the current state with the snapshot and fails on any new or changed
 //                                   dependency, and on any Docker image that is unapproved or not pinned to a version or digest.
 //   --json                        : prints the machine-readable findings and snapshot difference instead of text.
-//   --request [--requested-by <who>] : records a pending owner approval request for the current findings
-//                                   (policy/approval-requests.json). A request is not an approval.
+//   --request [--requested-by <who>] [--discrepancies]
+//                                 : records a pending owner request for the current dependency/image findings, or with
+//                                   --discrepancies for approval-record conflicts and missing approval records
+//                                   (policy/approval-requests.json). A request is not an approval or a resolution.
 //
 // Every finding is classified (lib/findings.mjs), linked to a dependency inventory record id and explained. An
 // approval record whose "covers" selectors match a finding marks it approved-but-not-snapshotted; it still fails until
@@ -20,8 +22,9 @@ import { classifyImageRef } from "./lib/docker-ref.mjs";
 import { diffSnapshot, inventoryId } from "./lib/inventory.mjs";
 import { createFinding, renderFinding, sortFindings, summarize } from "./lib/findings.mjs";
 import {
-  addRequest, buildApprovalRequest, checkCitedApprovals, checkImageApprovalConflicts, compareRecordSources,
-  findCoveringRecord, loadRequests, pendingRequestFindings, validateRecords,
+  addRequest, annotateWithRequests, buildApprovalRequest, buildDiscrepancyRequest, checkCitedApprovals,
+  checkImageApprovalConflicts, compareRecordSources, findCoveringRecord, loadRequests, pendingRequestFindings,
+  syncDiscrepancyRequests, validateRecords,
 } from "./lib/approvals.mjs";
 import { appendEntry } from "./lib/history.mjs";
 
@@ -261,8 +264,9 @@ export function evaluate() {
     }
   }
 
-  findings.push(...pendingRequestFindings(loadRequests(REQUESTS_PATH)));
-  const sorted = sortFindings(findings);
+  const requests = loadRequests(REQUESTS_PATH);
+  findings.push(...pendingRequestFindings(requests));
+  const sorted = sortFindings(annotateWithRequests(findings, requests));
   const summary = summarize(sorted);
   return { ok: summary.gate === "pass", findings: sorted, diff, summary };
 }
@@ -287,13 +291,26 @@ export function serialiseDiff(diff) {
   return { totals: diff.totals, added: strip(diff.added), removed: strip(diff.removed), specChanged: strip(diff.specChanged), occurrenceChanged: strip(diff.occurrenceChanged), unchanged: diff.unchanged };
 }
 
-export function requestApproval({ requestedBy, reason } = {}) {
+export function requestApproval({ requestedBy, reason, discrepancies = false } = {}) {
   const result = evaluate();
-  const request = buildApprovalRequest(result.findings, { requestedBy, reason });
+  const request = (discrepancies ? buildDiscrepancyRequest : buildApprovalRequest)(result.findings, { requestedBy, reason });
   if (!request) return { ok: true, request: null, added: false };
   const { added } = addRequest(REQUESTS_PATH, request);
-  if (added) appendEntry({ file: "policy/approval-requests.json", action: "request", reason: `approval request ${request.id} created`, actor: request.requestedBy });
+  if (added) appendEntry({ file: "policy/approval-requests.json", action: "request", reason: `${discrepancies ? "discrepancy" : "approval"} request ${request.id} created`, actor: request.requestedBy });
   return { ok: true, request, added };
+}
+
+// Closes discrepancy request items whose finding no longer occurs (for example after the owner recorded the missing
+// approval). Never closes a dependency approval request.
+export function syncRequests({ actor = "automation" } = {}) {
+  if (!existsSync(REQUESTS_PATH)) return { changed: [] };
+  const store = loadRequests(REQUESTS_PATH);
+  const changed = syncDiscrepancyRequests(store, evaluate().findings);
+  if (changed.length) {
+    writeFileSync(REQUESTS_PATH, JSON.stringify(store, null, 2) + "\n");
+    appendEntry({ file: "policy/approval-requests.json", action: "request", reason: `discrepancy items resolved: ${changed.join(", ")}`, actor });
+  }
+  return { changed };
 }
 
 if (process.argv[1]?.endsWith("check-dependency-approval.mjs")) {
@@ -304,7 +321,7 @@ if (process.argv[1]?.endsWith("check-dependency-approval.mjs")) {
     console.log(result.lines.join("\n"));
     process.exitCode = result.ok ? 0 : 1;
   } else if (argv.includes("--request")) {
-    const { request, added } = requestApproval({ requestedBy: arg("--requested-by"), reason: arg("--reason") });
+    const { request, added } = requestApproval({ requestedBy: arg("--requested-by"), reason: arg("--reason"), discrepancies: argv.includes("--discrepancies") });
     if (!request) console.log("no dependency or image findings: nothing to request");
     else console.log(added ? `approval request ${request.id} recorded with ${request.items.length} item(s) (pending owner decision)` : `approval request ${request.id} already recorded`);
   } else {

@@ -5,8 +5,13 @@
 //   inventory [--json]                                 current dependency inventory with stable record ids
 //   image    classify <reference>                      immutability classification of one image reference
 //   approvals validate                                 approval record findings only
-//   approvals request [--requested-by <who>] [--reason <text>]
-//                                                      record a pending owner approval request (not an approval)
+//   approvals request [--requested-by <who>] [--reason <text>] [--discrepancies]
+//                                                      record a pending owner approval request (not an approval);
+//                                                      --discrepancies tracks approval-record conflicts and cited
+//                                                      approvals without a record instead
+//   approvals sync                                     close discrepancy items whose finding no longer occurs
+//   approvals resolve-conflict --id <id> --keep record-file|policy-inline --decided-by <who> --owner-confirmed
+//                                                      OWNER ONLY: make both copies of an approval record identical
 //   approvals record --id <id> --approver <who> --what <text> --why <text> [--date YYYY-MM-DD]
 //                    [--request <REQ-id>] --owner-confirmed
 //                                                      OWNER ONLY: append an approval record; covers are taken from
@@ -19,16 +24,17 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { runAll } from "./check-all.mjs";
-import { collectAll, evaluate, requestApproval } from "./check-dependency-approval.mjs";
+import { collectAll, evaluate, requestApproval, syncRequests } from "./check-dependency-approval.mjs";
 import { CONFIG_ROOT, readJson } from "./lib/env.mjs";
 import { buildInventory } from "./lib/inventory.mjs";
 import { classifyImageRef } from "./lib/docker-ref.mjs";
 import { defaultEnvironmentName, listEnvironments, resolveEnvironment } from "./lib/environments.mjs";
-import { loadRequests, recordApproval } from "./lib/approvals.mjs";
+import { loadRequests, recordApproval, resolveRecordConflict } from "./lib/approvals.mjs";
 import { TRACKED_FILES, appendEntry, jsonDiff, listVersions, loadLedger, readVersion, rollback, verifyLedger } from "./lib/history.mjs";
 
 const APPROVALS_PATH = join(CONFIG_ROOT, "policy", "install-import-approvals.json");
 const REQUESTS_PATH = join(CONFIG_ROOT, "policy", "approval-requests.json");
+const INSTALL_POLICY_PATH = join(CONFIG_ROOT, "policy", "install-import-policy.json");
 
 const argv = process.argv.slice(2);
 const flag = (name) => argv.includes(name);
@@ -85,8 +91,21 @@ switch (command) {
       print({ findings: approvals });
       process.exitCode = approvals.some((f) => f.severity === "error") ? 1 : 0;
     } else if (sub === "request") {
-      const { request, added } = requestApproval({ requestedBy: opt("--requested-by"), reason: opt("--reason") });
-      print(request ? { added, request } : { added: false, message: "no dependency or image findings: nothing to request" });
+      const discrepancies = flag("--discrepancies");
+      const { request, added } = requestApproval({ requestedBy: opt("--requested-by"), reason: opt("--reason"), discrepancies });
+      print(request ? { added, request } : { added: false, message: `no ${discrepancies ? "approval-record discrepancies" : "dependency or image findings"}: nothing to request` });
+    } else if (sub === "sync") {
+      print(syncRequests({ actor: opt("--actor") ?? "automation" }));
+    } else if (sub === "resolve-conflict") {
+      const id = opt("--id");
+      const decidedBy = opt("--decided-by");
+      const result = resolveRecordConflict({ approvalsPath: APPROVALS_PATH, policyPath: INSTALL_POLICY_PATH, id, keep: opt("--keep"), decidedBy, ownerConfirmed: flag("--owner-confirmed") });
+      if (!result.ok) { console.error(`refused: ${result.error}`); process.exitCode = 1; break; }
+      if (result.file) {
+        const file = result.file === APPROVALS_PATH ? "policy/install-import-approvals.json" : "policy/install-import-policy.json";
+        appendEntry({ file, action: "approval", reason: `approval ${id} conflict resolved by keeping the ${opt("--keep")} copy (fields: ${result.changed.join(", ")})`, approvalId: id, actor: decidedBy });
+      }
+      print({ resolved: id, changed: result.changed, sync: syncRequests({ actor: decidedBy }) });
     } else if (sub === "record") {
       const requestId = opt("--request");
       let covers;
@@ -104,8 +123,9 @@ switch (command) {
       if (!result.ok) { console.error(`refused: ${result.error}`); process.exitCode = 1; break; }
       appendEntry({ file: "policy/install-import-approvals.json", action: "approval", reason: `approval ${record.id} recorded`, approvalId: record.id, actor: record.approver });
       if (requestId && existsSync(REQUESTS_PATH)) appendEntry({ file: "policy/approval-requests.json", action: "approval", reason: `request ${requestId} approved by ${record.id}`, approvalId: record.id, actor: record.approver });
+      syncRequests({ actor: record.approver });
       print({ recorded: record.id, covers: covers?.length ?? 0, next: `node checks/check-dependency-approval.mjs --snapshot --approval-id ${record.id}` });
-    } else usage("approvals validate | request | record");
+    } else usage("approvals validate | request | sync | resolve-conflict | record");
     break;
   }
   case "history": {
