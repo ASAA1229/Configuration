@@ -1,0 +1,16 @@
+name: Organization gates
+
+# The policy gate for this repository runs in organization-policy-ci.yml; this workflow adds the shared change-control
+# check (branch flow, owner-authorized promotion, pull request body).
+on:
+  pull_request:
+    branches: [new, dev, main]
+    types: [opened, synchronize, reopened, edited, labeled, unlabeled]
+
+permissions:
+  contents: read
+
+jobs:
+  change-control:
+    name: Change control
+    uses: ASAA1229/organization/.github/workflows/change-control.yml@new
