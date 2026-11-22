@@ -1,0 +1,22 @@
+{
+  "$id": "asaa.configuration.history-ledger.v1",
+  "type": "object",
+  "required": ["schema", "entries"],
+  "properties": {
+    "schema": { "const": "asaa.configuration.history-ledger.v1" },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["seq", "file", "sha256", "action", "reason", "recordedAt", "prevEntryHash", "entryHash"],
+        "properties": {
+          "seq": { "type": "integer", "minimum": 1 },
+          "file": { "type": "string" },
+          "sha256": { "type": ["string", "null"] },
+          "action": { "enum": ["baseline", "snapshot", "approval", "request", "rollback", "record"] },
+          "entryHash": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+        }
+      }
+    }
+  }
+}

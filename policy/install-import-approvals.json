@@ -1,0 +1,20 @@
+{
+  "schema": "asaa.configuration.install-import-approvals.v1",
+  "description": "Owner approval records for installs, images and imports. Each snapshot refresh cites one of these ids.",
+  "records": [
+    {
+      "id": "APPROVAL-2026-11-18-001",
+      "date": "2026-11-18",
+      "approver": "owner",
+      "what": "Baseline of the 18 Docker images in use on 2026-11-18 across the ASAA, Templates and configuration repositories",
+      "why": "Owner baseline. Agents must pin each image to an exact version and re-snapshot once pinned"
+    },
+    {
+      "id": "APPROVAL-2026-11-20-001",
+      "date": "2026-11-20",
+      "approver": "ASAA1229 owner",
+      "what": "Owner-approved review of all 30 dependency-approval findings from Configuration policy CI run 44598397971, covering newly detected ASAA Python test dependencies and Docker image references across ASAA, Templates and Configuration identity, including repeated local image occurrences and unpinned image findings.",
+      "why": "Explicit ASAA1229 owner instruction on 2026-11-20: all 30 findings are approved. Approval does not waive IIP-3 immutable/exact image pinning or the requirement to refresh the dependency snapshot after recording approval."
+    }
+  ]
+}

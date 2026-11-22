@@ -1,0 +1,12 @@
+{
+  "schema": "asaa.configuration.environment.v1",
+  "name": "local-prod",
+  "extends": "base",
+  "workspace": "sibling-checkouts",
+  "checks": {
+    "drift": "fail"
+  },
+  "drift": {
+    "worktree": true
+  }
+}

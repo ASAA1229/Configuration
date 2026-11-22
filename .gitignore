@@ -1,0 +1,47 @@
+# ASAA configuration project - root ignore rules (ASAA/docs/BRANCHING_POLICY.md section 8.1)
+
+# Environment secrets: only the safe example template is tracked
+.env
+.env.*
+!.env.example
+*.local
+
+# Local identity runtime state and exports (Keycloak dev-file storage, realm exports with data)
+identity/data/
+identity/export/
+
+# Credentials and private keys
+*.pem
+*.key
+secrets/
+credentials/
+
+# Logs and scratch
+*.log
+tmp/
+.tmp/
+
+# Local databases and backups
+*.db
+*.sqlite3
+backups/
+
+# Node / test output (checks use no dependencies, kept for future tooling)
+node_modules/
+coverage/
+test-results/
+playwright-report/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Generated archives, checksums, SBOMs and release reports
+*.zip
+*.tar.gz
+*.sha256
+*.cdx.json
+customer-release-report.json
+policy-report.json

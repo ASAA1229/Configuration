@@ -1,0 +1,108 @@
+{
+  "schema": "asaa.configuration.data-locality-policy.v1",
+  "owner": "ASAA organization owner",
+  "description": "Personal and employee data stays on this laptop. Every service binds to 127.0.0.1 only, no AI or speech provider outside the machine is allowed, and federated identity providers that would send identity data to Google or Microsoft stay disabled. checks/check-data-locality.mjs enforces these rules against the four project repositories without printing any secret values.",
+  "principles": [
+    {
+      "id": "DL-1",
+      "description": "Personal data (employee, profile, resume, device and conversation data) is stored and processed only on this laptop."
+    },
+    {
+      "id": "DL-2",
+      "description": "Every listening service binds to 127.0.0.1 or localhost. Nothing is exposed on a LAN or public interface by this configuration."
+    },
+    {
+      "id": "DL-3",
+      "description": "AI inference uses local providers only: Ollama on loopback and the JARVIS gateway on loopback. Paid or cloud AI is off."
+    },
+    {
+      "id": "DL-4",
+      "description": "Identity federation with external providers (Google, Microsoft, other social IdPs) is disabled. Login is local to the ASAA realm with TOTP MFA."
+    }
+  ],
+  "loopbackHosts": ["127.0.0.1", "localhost", "::1"],
+  "rules": [
+    {
+      "id": "DL-AI-OLLAMA",
+      "project": "JARVIS",
+      "source": "OLLAMA_URL",
+      "requirement": "must be unset or point to a loopback host",
+      "severity": "fail"
+    },
+    {
+      "id": "DL-AI-JARVIS-GATEWAY",
+      "project": "Templates",
+      "source": "AI_PROVIDER / OLLAMA_URL / JARVIS_AI_URL",
+      "requirement": "AI_PROVIDER must be ollama or jarvis; OLLAMA_URL and JARVIS_AI_URL must point to a loopback host",
+      "severity": "fail"
+    },
+    {
+      "id": "DL-AI-JARVIS-LOOPBACK",
+      "project": "Portfolio",
+      "source": "JARVIS_AI_URL",
+      "requirement": "must be unset or point to a loopback host",
+      "severity": "fail"
+    },
+    {
+      "id": "DL-CLOUD-KEYS-UNSET",
+      "project": "JARVIS",
+      "source": "JARVIS_CLOUD_OPENAI_API_KEY, JARVIS_CLOUD_ANTHROPIC_API_KEY",
+      "requirement": "must be unset or empty",
+      "severity": "fail"
+    },
+    {
+      "id": "DL-CLOUD-ALLOWED-TASKS",
+      "project": "JARVIS",
+      "source": "JARVIS_CLOUD_ALLOWED_TASKS",
+      "requirement": "must be unset or empty",
+      "severity": "fail"
+    },
+    {
+      "id": "DL-CLOUD-SPEECH-OFF",
+      "project": "JARVIS",
+      "source": "JARVIS_ALLOW_CLOUD_SPEECH",
+      "requirement": "must be unset or not equal to 1",
+      "severity": "fail"
+    },
+    {
+      "id": "DL-CLOUD-SITE-GATEWAY-OFF",
+      "project": "JARVIS",
+      "source": "JARVIS_SITE_GATEWAY_ALLOW_CLOUD",
+      "requirement": "must be unset or false",
+      "severity": "fail"
+    },
+    {
+      "id": "DL-PAID-FALLBACK-OFF",
+      "project": "Portfolio",
+      "source": "PORTFOLIO_AI_ALLOW_PAID_FALLBACK",
+      "requirement": "must be unset or not equal to true",
+      "severity": "fail"
+    },
+    {
+      "id": "DL-OPENAI-KEY-UNSET",
+      "project": "Portfolio",
+      "source": "OPENAI_API_KEY",
+      "requirement": "must be unset or empty",
+      "severity": "fail"
+    },
+    {
+      "id": "DL-BIND-LOOPBACK",
+      "project": "all",
+      "source": "HOST / BIND / listen host settings found in project env files",
+      "requirement": "if set, must be 127.0.0.1, localhost or ::1",
+      "severity": "fail"
+    },
+    {
+      "id": "DL-IDP-DISABLED",
+      "project": "configuration",
+      "source": "identity/realm/asaa-realm.json identityProviders[*].enabled",
+      "requirement": "every external identity provider has enabled=false",
+      "severity": "fail"
+    }
+  ],
+  "scannedFiles": [".env", ".env.local", ".env.local-prod", ".dev.vars", ".env.example"],
+  "valuesPolicy": "Checks report key names and pass/fail only. Values are never printed.",
+  "pendingOwnerApproval": [
+    "Whether a future approved cloud AI provider may be enabled. Currently none is approved."
+  ]
+}
