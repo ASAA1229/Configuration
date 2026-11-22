@@ -1,0 +1,28 @@
+{
+  "$id": "asaa.configuration.approved-dependencies.v2",
+  "type": "object",
+  "required": ["schema", "approvalId", "dependencies"],
+  "properties": {
+    "schema": { "const": "asaa.configuration.approved-dependencies.v2" },
+    "description": { "type": "string" },
+    "generatedBy": { "type": "string" },
+    "approvalId": { "type": "string", "minLength": 1 },
+    "counts": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["repo", "ecosystem", "manifest", "section", "name"],
+        "additionalProperties": false,
+        "properties": {
+          "repo": { "type": "string", "minLength": 1 },
+          "ecosystem": { "enum": ["npm", "python", "docker"] },
+          "manifest": { "type": "string", "minLength": 1 },
+          "section": { "type": "string", "minLength": 1 },
+          "name": { "type": "string", "minLength": 1 },
+          "spec": { "type": "string" }
+        }
+      }
+    }
+  }
+}
