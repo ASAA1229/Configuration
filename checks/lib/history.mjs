@@ -24,6 +24,7 @@ export const TRACKED_FILES = [
   "policy/approved-dependencies.json",
   "policy/install-import-policy.json",
   "policy/install-import-approvals.json",
+  "policy/approval-requests.json",
   "policy/data-locality-policy.json",
   "policy/audit-policy.json",
   "identity/realm/asaa-realm.json",
