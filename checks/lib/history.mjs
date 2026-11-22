@@ -160,3 +160,16 @@ export function rollback({ file, commit, approvalId, approvalIds, actor, reason 
   const entry = appendEntry({ file, action: "rollback", reason: reason ?? `rollback to ${commit}`, approvalId, actor, details: { toCommit: commit, fromSha256: fromSha } }, { path: ledgerPath, root });
   return { ok: true, entry };
 }
+
+// Identifies the configuration a consumer evaluated (E:D1.7): the Configuration commit, whether the tracked files have
+// uncommitted changes, and the head of the hash-chained change ledger. A consumer that records this can later compare
+// it with the current version (history verify / diff) or ask the owner for a rollback to it (history rollback).
+export function configurationVersion({ root = CONFIG_ROOT, path = LEDGER_PATH } = {}) {
+  let commit = null;
+  let dirty = null;
+  try { commit = git(["rev-parse", "HEAD"], root).trim(); } catch { /* not a git checkout */ }
+  try { dirty = git(["status", "--porcelain", "--", ...TRACKED_FILES], root).trim() !== ""; } catch { /* not a git checkout */ }
+  const ledger = loadLedger(path);
+  const head = ledger.entries.at(-1) ?? null;
+  return { commit, trackedFilesDirty: dirty, ledger: { entries: ledger.entries.length, headSeq: head?.seq ?? null, headHash: head?.entryHash ?? null, chainOk: verifyLedger(ledger).ok } };
+}
