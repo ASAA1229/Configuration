@@ -6,7 +6,7 @@
 //
 // Immutability levels, strongest first:
 //   immutable   - pinned by a valid sha256 digest (the content can never change)
-//   exact       - pinned to a fixed version tag (major.minor[.patch][-suffix] or rehearsal-N)
+//   exact       - pinned to a fixed version tag (major.minor.patch[-suffix] or rehearsal-N)
 //   conditional - the tag is a variable whose fallback is a fixed tag, or a required variable whose value comes from a
 //                 trusted version-derived source supplied by the caller
 //   mutable     - untagged, "latest", a free-form tag, a variable without a fixed fallback, or a variable repository
@@ -17,8 +17,15 @@ const COMPONENT = /^[a-z0-9]+(?:(?:[._]|__|-+)[a-z0-9]+)*$/;
 const TAG = /^[\w][\w.-]{0,127}$/;
 const HOST = /^(?:localhost|[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?)+|\[[0-9a-fA-F:]+\])(?::\d{1,5})?$|^localhost(?::\d{1,5})?$/;
 
+// An exact tag names one release: major.minor.patch (optional "v" prefix and a "-variant" or pre-release suffix), or a
+// rehearsal build number. A major or major.minor tag (16, 1.25, 3.12-slim) follows later releases and is not exact.
 export function isFixedTag(tag) {
-  return /^\d+\.\d+(?:\.\d+)?(?:-[a-z0-9][a-z0-9.]*)?$/i.test(tag) || /^rehearsal-\d+$/i.test(tag);
+  return /^v?\d+\.\d+\.\d+(?:-[a-z0-9][a-z0-9.]*)?$/i.test(tag) || /^rehearsal-\d+$/i.test(tag);
+}
+
+// Name of the variable that supplies the tag, when the reference is "conditional" on it.
+export function tagVariableName(raw) {
+  return parseImageRef(raw).tagVariable?.name ?? null;
 }
 
 // Splits a string into literal text and interpolation tokens. Returns null when braces are unbalanced.

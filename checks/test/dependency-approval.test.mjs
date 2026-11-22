@@ -33,3 +33,12 @@ test("a required Templates image tag is accepted only with its version-derived s
   assert.equal(isExactDockerTag(image), false);
   assert.equal(isExactDockerTag(image, { versionDerivedTemplateTag: true }), true);
 });
+
+test("major and major.minor tags follow later releases and do not satisfy IIP-3 (E:D1.4)", () => {
+  for (const ref of ["nginx:1.25", "postgres:16", "python:3.12-slim", "node:24-alpine", "app:${TAG:-1.2}"]) {
+    assert.equal(isExactDockerTag(ref), false, ref);
+  }
+  for (const ref of ["nginx:1.25.3", "ghcr.io/org/app:v1.2.3", "node:24.22.3-alpine3.24", "app:${TAG:-1.2.3}"]) {
+    assert.equal(isExactDockerTag(ref), true, ref);
+  }
+});

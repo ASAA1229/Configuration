@@ -18,7 +18,7 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, join, relative } from "node:path";
 import { CONFIG_ROOT, PROJECT_REPOS, readJson, walkFiles } from "./lib/env.mjs";
-import { classifyImageRef } from "./lib/docker-ref.mjs";
+import { classifyImageRef, isFixedTag, tagVariableName } from "./lib/docker-ref.mjs";
 import { diffSnapshot, inventoryId } from "./lib/inventory.mjs";
 import { createFinding, renderFinding, sortFindings, summarize } from "./lib/findings.mjs";
 import {
@@ -259,6 +259,16 @@ export function evaluate() {
     } else if (!cls.pinned) {
       findings.push(createFinding({ code: "IMG-UNPINNED", repo: d.repo, inventoryId: invId, file: d.manifest, subject: id, message: `UNPINNED   ${d.repo}: image ${d.name} (exact tag or digest required, see IIP-3)`, explanation: cls.reason, remediation: "pin the image to an exact version tag or sha256 digest", data: { level: cls.level } }));
     }
+    // A tag supplied by a variable is only as fixed as every value the repository assigns to that variable: an env file
+    // that sets it to "latest" or a floating tag makes the image mutable (IIP-3).
+    const tagVar = cls.level === "conditional" ? tagVariableName(d.name) : null;
+    if (tagVar) {
+      const repo = ALL_REPOS.find((r) => r.name === d.repo);
+      for (const o of repo ? envOverrides(repo.path, tagVar) : []) {
+        if (o.value === "" || isFixedTag(o.value)) continue;
+        findings.push(createFinding({ code: "IMG-UNPINNED", repo: d.repo, inventoryId: invId, file: o.file, subject: `${id} ${tagVar}@${o.file}`, message: `UNPINNED   ${d.repo}: ${o.file} sets ${tagVar}=${o.value}, so image ${d.name} resolves to a tag that is not exact (IIP-3)`, remediation: `set ${tagVar} to an exact version tag or remove the override`, data: { variable: tagVar, value: o.value } }));
+      }
+    }
     if (!approvedImages.has(d.name)) {
       findings.push(createFinding({ code: "IMG-NOT-APPROVED", repo: d.repo, inventoryId: invId, file: d.manifest, subject: id, message: `NOT APPROVED ${d.repo}: image ${d.name} (owner approval record required, see IIP-4)`, remediation: "the owner approves the image and adds it to approvedDockerImages, or the reference is changed to an approved image", data: { level: cls.level } }));
     }
@@ -269,6 +279,24 @@ export function evaluate() {
   const sorted = sortFindings(annotateWithRequests(findings, requests));
   const summary = summarize(sorted);
   return { ok: summary.gate === "pass", findings: sorted, diff, summary };
+}
+
+// Values assigned to a variable in the repository's env files (.env, .env.*, *.env), commented lines excluded.
+const envFileCache = new Map();
+function envOverrides(root, name) {
+  const out = [];
+  // One directory walk per repository, however many variable-tagged images it has.
+  if (!envFileCache.has(root)) envFileCache.set(root, walkFiles(root, (entry) => /^\.env(\..+)?$|\.env$|\.env\.(example|sample|template|dist)$/i.test(entry)));
+  const files = envFileCache.get(root);
+  for (const file of files) {
+    let text;
+    try { text = readFileSync(file, "utf8"); } catch { continue; }
+    for (const line of text.split(/\r?\n/)) {
+      const m = /^\s*(?:export\s+)?([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)$/.exec(line);
+      if (m && m[1] === name) out.push({ file: relative(root, file).split("\\").join("/"), value: m[2].trim().replace(/^["']|["']$/g, "") });
+    }
+  }
+  return out;
 }
 
 export function run() {
