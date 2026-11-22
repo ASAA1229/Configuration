@@ -4,74 +4,74 @@
     {
       "seq": 1,
       "file": "policy/approved-dependencies.json",
-      "sha256": "7f8b6cd242853de1933e5bf4575664db158e93ebd66b41b65c080f5dc4f7f181",
+      "sha256": "d9c972f503b6bbc54f725fcea41df5e8a5d0329ec2bd079179008f26b7063520",
       "action": "baseline",
       "reason": "ledger initialised at Phase D0: records current content hashes, no policy change",
       "approvalId": null,
       "actor": "automation",
-      "recordedAt": "2026-11-22T06:01:24.088Z",
+      "recordedAt": "2026-11-22T06:02:16.241Z",
       "prevEntryHash": null,
-      "entryHash": "99084f980a0b1332b16a216da72bf636b5bcdfa031a5dd33b675ca90a7c952b8"
+      "entryHash": "2eee95e16d8d4b3ab9b7a89a804d28272a9a0b98dc4f4e29e5c810b1236a506d"
     },
     {
       "seq": 2,
       "file": "policy/install-import-policy.json",
-      "sha256": "12787a64149ae111a86076132638bb2c2174a84099933100abc42fbc1f4cbdca",
+      "sha256": "009ca066360f2e97236da05fe334a9d4e0651d86780ef6ff0a1fecc54869ea64",
       "action": "baseline",
       "reason": "ledger initialised at Phase D0: records current content hashes, no policy change",
       "approvalId": null,
       "actor": "automation",
-      "recordedAt": "2026-11-22T06:01:24.102Z",
-      "prevEntryHash": "99084f980a0b1332b16a216da72bf636b5bcdfa031a5dd33b675ca90a7c952b8",
-      "entryHash": "67f96a362d8c6c88a767137bad9d157ffcb6fff18a78520a30023d73f82f01c6"
+      "recordedAt": "2026-11-22T06:02:16.253Z",
+      "prevEntryHash": "2eee95e16d8d4b3ab9b7a89a804d28272a9a0b98dc4f4e29e5c810b1236a506d",
+      "entryHash": "783239bd21470059d6d50bc1f6d10634169300e062f0af398ae6fffa1f05eb86"
     },
     {
       "seq": 3,
       "file": "policy/install-import-approvals.json",
-      "sha256": "8013179fed9d0907ba07b1ea47617597d9c5e032181c40e1ffd6490bbd99089b",
+      "sha256": "041c44e8ea6a4d8584cca281fd7a16beb3bd9f97121578401d8d04fa505965cf",
       "action": "baseline",
       "reason": "ledger initialised at Phase D0: records current content hashes, no policy change",
       "approvalId": null,
       "actor": "automation",
-      "recordedAt": "2026-11-22T06:01:24.114Z",
-      "prevEntryHash": "67f96a362d8c6c88a767137bad9d157ffcb6fff18a78520a30023d73f82f01c6",
-      "entryHash": "cefd7e3f74015c86cd772fb872ad744749fefddc3ba893949fe6236c37f95653"
+      "recordedAt": "2026-11-22T06:02:16.262Z",
+      "prevEntryHash": "783239bd21470059d6d50bc1f6d10634169300e062f0af398ae6fffa1f05eb86",
+      "entryHash": "08eb977bf3222fae3ebf0b45066402e36f8cdab6a89de484c504195668c3c02c"
     },
     {
       "seq": 4,
       "file": "policy/data-locality-policy.json",
-      "sha256": "7b11df6de98fc24d3b62ac0e8b3b1c91c3ad946cb36edfe8a6c17b782684f4c9",
+      "sha256": "741e3021c57215f75ee97ea684141bab21e4cc4ca0bfdb23e72990737faa8f89",
       "action": "baseline",
       "reason": "ledger initialised at Phase D0: records current content hashes, no policy change",
       "approvalId": null,
       "actor": "automation",
-      "recordedAt": "2026-11-22T06:01:24.126Z",
-      "prevEntryHash": "cefd7e3f74015c86cd772fb872ad744749fefddc3ba893949fe6236c37f95653",
-      "entryHash": "cf46586bb496b31716e6d5e3f610094c968b1d3ec838a31707bccfbf25e9bca5"
+      "recordedAt": "2026-11-22T06:02:16.271Z",
+      "prevEntryHash": "08eb977bf3222fae3ebf0b45066402e36f8cdab6a89de484c504195668c3c02c",
+      "entryHash": "64943f7e55b9883f59a7116bc7186eacdfd837666cc6903c4814622a48ba9a7d"
     },
     {
       "seq": 5,
       "file": "policy/audit-policy.json",
-      "sha256": "2e649f4dcd1507ded5627c99d08cc0cd53e4c096a9a5a905cfc30769c9f796a8",
+      "sha256": "ba029ae1f0ee57ba0a488e316414e1ed770db9a975cb94f1d35ad153865e5cf7",
       "action": "baseline",
       "reason": "ledger initialised at Phase D0: records current content hashes, no policy change",
       "approvalId": null,
       "actor": "automation",
-      "recordedAt": "2026-11-22T06:01:24.157Z",
-      "prevEntryHash": "cf46586bb496b31716e6d5e3f610094c968b1d3ec838a31707bccfbf25e9bca5",
-      "entryHash": "13c2de6aa8c60dfe8858e2e5b9d0172ae5171df2418b6eee11c467522afe28c6"
+      "recordedAt": "2026-11-22T06:02:16.280Z",
+      "prevEntryHash": "64943f7e55b9883f59a7116bc7186eacdfd837666cc6903c4814622a48ba9a7d",
+      "entryHash": "875d752144d5ee79d1a3a1287ef078d407915014e578245ccf43ff6b3560870c"
     },
     {
       "seq": 6,
       "file": "identity/realm/asaa-realm.json",
-      "sha256": "6098d4390c83c99f0f8927b1eff2572bb16a8d3d5103a28162422732fc1c9ade",
+      "sha256": "5213651974c66401d8520d435271f49f50e8d966c31e9072ef6804f3f7061dd2",
       "action": "baseline",
       "reason": "ledger initialised at Phase D0: records current content hashes, no policy change",
       "approvalId": null,
       "actor": "automation",
-      "recordedAt": "2026-11-22T06:01:24.179Z",
-      "prevEntryHash": "13c2de6aa8c60dfe8858e2e5b9d0172ae5171df2418b6eee11c467522afe28c6",
-      "entryHash": "74439cad6ad43de3313a1c1c67cb44e7a9318848e3118023a74b7b7beb473c41"
+      "recordedAt": "2026-11-22T06:02:16.288Z",
+      "prevEntryHash": "875d752144d5ee79d1a3a1287ef078d407915014e578245ccf43ff6b3560870c",
+      "entryHash": "5d8ed060694ead3652f17fa3767a10eab5f013e045d4f560c89f90b76dfe8432"
     },
     {
       "seq": 7,
@@ -81,9 +81,9 @@
       "reason": "ledger initialised at Phase D0: records current content hashes, no policy change",
       "approvalId": null,
       "actor": "automation",
-      "recordedAt": "2026-11-22T06:01:24.190Z",
-      "prevEntryHash": "74439cad6ad43de3313a1c1c67cb44e7a9318848e3118023a74b7b7beb473c41",
-      "entryHash": "948c37a53615d89476a4adc6d19612ba7ca3907b80882ca96be5fa78507ca811"
+      "recordedAt": "2026-11-22T06:02:16.302Z",
+      "prevEntryHash": "5d8ed060694ead3652f17fa3767a10eab5f013e045d4f560c89f90b76dfe8432",
+      "entryHash": "45a024ebf22b5451274446f3d2ce7f1c56d12d411d7cd126a1085cf4b8c4b7df"
     },
     {
       "seq": 8,
@@ -93,9 +93,9 @@
       "reason": "ledger initialised at Phase D0: records current content hashes, no policy change",
       "approvalId": null,
       "actor": "automation",
-      "recordedAt": "2026-11-22T06:01:24.200Z",
-      "prevEntryHash": "948c37a53615d89476a4adc6d19612ba7ca3907b80882ca96be5fa78507ca811",
-      "entryHash": "5f306808c7df3d95a8affef9fec9d90fb6342564e6f7b0edc9f1bbff2deca4ab"
+      "recordedAt": "2026-11-22T06:02:16.314Z",
+      "prevEntryHash": "45a024ebf22b5451274446f3d2ce7f1c56d12d411d7cd126a1085cf4b8c4b7df",
+      "entryHash": "0dcd0039d5a25aa23286cf6ae5279a618c658bdd0d92862ac7ec8042596826b9"
     },
     {
       "seq": 9,
@@ -105,9 +105,9 @@
       "reason": "ledger initialised at Phase D0: records current content hashes, no policy change",
       "approvalId": null,
       "actor": "automation",
-      "recordedAt": "2026-11-22T06:01:24.220Z",
-      "prevEntryHash": "5f306808c7df3d95a8affef9fec9d90fb6342564e6f7b0edc9f1bbff2deca4ab",
-      "entryHash": "fe145ae8f2ee1eeba8ae66513d4a969d366d9a46820f0b693708417387ab08ec"
+      "recordedAt": "2026-11-22T06:02:16.325Z",
+      "prevEntryHash": "0dcd0039d5a25aa23286cf6ae5279a618c658bdd0d92862ac7ec8042596826b9",
+      "entryHash": "3ce0aa4b45af619b89d5eb4c84f369bf2b519ca504030eec296e84e280ac06c4"
     },
     {
       "seq": 10,
@@ -117,9 +117,9 @@
       "reason": "ledger initialised at Phase D0: records current content hashes, no policy change",
       "approvalId": null,
       "actor": "automation",
-      "recordedAt": "2026-11-22T06:01:24.239Z",
-      "prevEntryHash": "fe145ae8f2ee1eeba8ae66513d4a969d366d9a46820f0b693708417387ab08ec",
-      "entryHash": "1e2bca8d642a019741949ecbdd724a8fefb34933b2dea90a1abc7ebd67ef9000"
+      "recordedAt": "2026-11-22T06:02:16.336Z",
+      "prevEntryHash": "3ce0aa4b45af619b89d5eb4c84f369bf2b519ca504030eec296e84e280ac06c4",
+      "entryHash": "a70569a7b040b78ccd507961d2574ffc7ec19e36d41de0b7bf2877b0124436db"
     }
   ]
 }

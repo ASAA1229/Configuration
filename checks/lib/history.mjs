@@ -39,9 +39,10 @@ export function sha256(text) {
   return createHash("sha256").update(text).digest("hex");
 }
 
+// Content hash with line endings normalised, so a CRLF checkout (core.autocrlf) is not reported as drift.
 export function fileSha(rel, root = CONFIG_ROOT) {
   const full = join(root, rel);
-  return existsSync(full) ? sha256(readFileSync(full)) : null;
+  return existsSync(full) ? sha256(readFileSync(full, "utf8").replace(/\r\n/g, "\n")) : null;
 }
 
 export function loadLedger(path = LEDGER_PATH) {
