@@ -1,0 +1,9 @@
+{
+  "schema": "asaa.configuration.environment.v1",
+  "name": "local",
+  "extends": "base",
+  "workspace": "sibling-checkouts",
+  "drift": {
+    "worktree": true
+  }
+}
