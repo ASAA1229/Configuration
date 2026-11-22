@@ -44,3 +44,4 @@ Thumbs.db
 *.sha256
 *.cdx.json
 customer-release-report.json
+policy-report.json
