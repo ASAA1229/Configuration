@@ -1,0 +1,125 @@
+{
+  "schema": "asaa.configuration.history-ledger.v1",
+  "entries": [
+    {
+      "seq": 1,
+      "file": "policy/approved-dependencies.json",
+      "sha256": "7f8b6cd242853de1933e5bf4575664db158e93ebd66b41b65c080f5dc4f7f181",
+      "action": "baseline",
+      "reason": "ledger initialised at Phase D0: records current content hashes, no policy change",
+      "approvalId": null,
+      "actor": "automation",
+      "recordedAt": "2026-11-22T06:01:24.088Z",
+      "prevEntryHash": null,
+      "entryHash": "99084f980a0b1332b16a216da72bf636b5bcdfa031a5dd33b675ca90a7c952b8"
+    },
+    {
+      "seq": 2,
+      "file": "policy/install-import-policy.json",
+      "sha256": "12787a64149ae111a86076132638bb2c2174a84099933100abc42fbc1f4cbdca",
+      "action": "baseline",
+      "reason": "ledger initialised at Phase D0: records current content hashes, no policy change",
+      "approvalId": null,
+      "actor": "automation",
+      "recordedAt": "2026-11-22T06:01:24.102Z",
+      "prevEntryHash": "99084f980a0b1332b16a216da72bf636b5bcdfa031a5dd33b675ca90a7c952b8",
+      "entryHash": "67f96a362d8c6c88a767137bad9d157ffcb6fff18a78520a30023d73f82f01c6"
+    },
+    {
+      "seq": 3,
+      "file": "policy/install-import-approvals.json",
+      "sha256": "8013179fed9d0907ba07b1ea47617597d9c5e032181c40e1ffd6490bbd99089b",
+      "action": "baseline",
+      "reason": "ledger initialised at Phase D0: records current content hashes, no policy change",
+      "approvalId": null,
+      "actor": "automation",
+      "recordedAt": "2026-11-22T06:01:24.114Z",
+      "prevEntryHash": "67f96a362d8c6c88a767137bad9d157ffcb6fff18a78520a30023d73f82f01c6",
+      "entryHash": "cefd7e3f74015c86cd772fb872ad744749fefddc3ba893949fe6236c37f95653"
+    },
+    {
+      "seq": 4,
+      "file": "policy/data-locality-policy.json",
+      "sha256": "7b11df6de98fc24d3b62ac0e8b3b1c91c3ad946cb36edfe8a6c17b782684f4c9",
+      "action": "baseline",
+      "reason": "ledger initialised at Phase D0: records current content hashes, no policy change",
+      "approvalId": null,
+      "actor": "automation",
+      "recordedAt": "2026-11-22T06:01:24.126Z",
+      "prevEntryHash": "cefd7e3f74015c86cd772fb872ad744749fefddc3ba893949fe6236c37f95653",
+      "entryHash": "cf46586bb496b31716e6d5e3f610094c968b1d3ec838a31707bccfbf25e9bca5"
+    },
+    {
+      "seq": 5,
+      "file": "policy/audit-policy.json",
+      "sha256": "2e649f4dcd1507ded5627c99d08cc0cd53e4c096a9a5a905cfc30769c9f796a8",
+      "action": "baseline",
+      "reason": "ledger initialised at Phase D0: records current content hashes, no policy change",
+      "approvalId": null,
+      "actor": "automation",
+      "recordedAt": "2026-11-22T06:01:24.157Z",
+      "prevEntryHash": "cf46586bb496b31716e6d5e3f610094c968b1d3ec838a31707bccfbf25e9bca5",
+      "entryHash": "13c2de6aa8c60dfe8858e2e5b9d0172ae5171df2418b6eee11c467522afe28c6"
+    },
+    {
+      "seq": 6,
+      "file": "identity/realm/asaa-realm.json",
+      "sha256": "6098d4390c83c99f0f8927b1eff2572bb16a8d3d5103a28162422732fc1c9ade",
+      "action": "baseline",
+      "reason": "ledger initialised at Phase D0: records current content hashes, no policy change",
+      "approvalId": null,
+      "actor": "automation",
+      "recordedAt": "2026-11-22T06:01:24.179Z",
+      "prevEntryHash": "13c2de6aa8c60dfe8858e2e5b9d0172ae5171df2418b6eee11c467522afe28c6",
+      "entryHash": "74439cad6ad43de3313a1c1c67cb44e7a9318848e3118023a74b7b7beb473c41"
+    },
+    {
+      "seq": 7,
+      "file": "environments/base.json",
+      "sha256": "1aafb5610cbfcf4b0ffe0c50b22e8c6a7b8afb37944405021d125b365c8cfc94",
+      "action": "baseline",
+      "reason": "ledger initialised at Phase D0: records current content hashes, no policy change",
+      "approvalId": null,
+      "actor": "automation",
+      "recordedAt": "2026-11-22T06:01:24.190Z",
+      "prevEntryHash": "74439cad6ad43de3313a1c1c67cb44e7a9318848e3118023a74b7b7beb473c41",
+      "entryHash": "948c37a53615d89476a4adc6d19612ba7ca3907b80882ca96be5fa78507ca811"
+    },
+    {
+      "seq": 8,
+      "file": "environments/local.json",
+      "sha256": "c8bb5f0bc8014476f9f89c288f783bd0da646e281b9d101a339f794bcb23b3c8",
+      "action": "baseline",
+      "reason": "ledger initialised at Phase D0: records current content hashes, no policy change",
+      "approvalId": null,
+      "actor": "automation",
+      "recordedAt": "2026-11-22T06:01:24.200Z",
+      "prevEntryHash": "948c37a53615d89476a4adc6d19612ba7ca3907b80882ca96be5fa78507ca811",
+      "entryHash": "5f306808c7df3d95a8affef9fec9d90fb6342564e6f7b0edc9f1bbff2deca4ab"
+    },
+    {
+      "seq": 9,
+      "file": "environments/ci.json",
+      "sha256": "fb3e8f93b666232f8201ba207e5696060e8ed18253a053aeb854beaa70a6f6e6",
+      "action": "baseline",
+      "reason": "ledger initialised at Phase D0: records current content hashes, no policy change",
+      "approvalId": null,
+      "actor": "automation",
+      "recordedAt": "2026-11-22T06:01:24.220Z",
+      "prevEntryHash": "5f306808c7df3d95a8affef9fec9d90fb6342564e6f7b0edc9f1bbff2deca4ab",
+      "entryHash": "fe145ae8f2ee1eeba8ae66513d4a969d366d9a46820f0b693708417387ab08ec"
+    },
+    {
+      "seq": 10,
+      "file": "environments/local-prod.json",
+      "sha256": "eb23c9505e9dd3ac065b2fb8c889826624206897214187446fbb493cf81744de",
+      "action": "baseline",
+      "reason": "ledger initialised at Phase D0: records current content hashes, no policy change",
+      "approvalId": null,
+      "actor": "automation",
+      "recordedAt": "2026-11-22T06:01:24.239Z",
+      "prevEntryHash": "fe145ae8f2ee1eeba8ae66513d4a969d366d9a46820f0b693708417387ab08ec",
+      "entryHash": "1e2bca8d642a019741949ecbdd724a8fefb34933b2dea90a1abc7ebd67ef9000"
+    }
+  ]
+}
