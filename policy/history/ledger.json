@@ -156,6 +156,18 @@
       "recordedAt": "2026-11-24T11:20:30.082Z",
       "prevEntryHash": "fe333b27a332447e7da4f089c960cf3e995564c369d3364e0f8486962668a70c",
       "entryHash": "eedb7a8e607569f336ceb81f2a469ebd644f9298676a7194d08aa7d6405a2499"
+    },
+    {
+      "seq": 14,
+      "file": "policy/approval-requests.json",
+      "sha256": "90dc3b8848b80dacae5bd90dcc8ee9abc71cc3538372ff0cecdd4b8481940995",
+      "action": "request",
+      "reason": "approval request REQ-20261124-99CA4231 created",
+      "approvalId": null,
+      "actor": "development-agent (E3:D4.17 JARVIS Learn extension)",
+      "recordedAt": "2026-11-24T21:03:35.628Z",
+      "prevEntryHash": "eedb7a8e607569f336ceb81f2a469ebd644f9298676a7194d08aa7d6405a2499",
+      "entryHash": "e93ec283098a797efb2a2172e209ae48b27cd648487cef067e068841c599d810"
     }
   ]
 }

@@ -43,6 +43,72 @@
           ]
         }
       ]
+    },
+    {
+      "id": "REQ-20261124-99CA4231",
+      "status": "pending-owner",
+      "createdAt": "2026-11-24T21:03:35.626Z",
+      "requestedBy": "development-agent (E3:D4.17 JARVIS Learn extension)",
+      "reason": "dependency or image changes detected by check-dependency-approval",
+      "items": [
+        {
+          "findingId": "DEP-NEW:049a6c8ee4",
+          "code": "DEP-NEW",
+          "inventoryId": "dep-2d1520f798e9",
+          "repo": "JARVIS",
+          "subject": "JARVIS vscode-extension/package.json [devDependencies]: @types/node",
+          "ownerAction": "approve-or-remove"
+        },
+        {
+          "findingId": "DEP-NEW:155a09aaf5",
+          "code": "DEP-NEW",
+          "inventoryId": "dep-7c38f197d2bc",
+          "repo": "JARVIS",
+          "subject": "JARVIS vscode-extension/package.json [devDependencies]: @types/vscode",
+          "ownerAction": "approve-or-remove"
+        },
+        {
+          "findingId": "DEP-NEW:1bae3175d7",
+          "code": "DEP-NEW",
+          "inventoryId": "dep-0f8df16afafb",
+          "repo": "JARVIS",
+          "subject": "JARVIS vscode-extension/package.json [devDependencies]: @vscode/vsce",
+          "ownerAction": "approve-or-remove"
+        },
+        {
+          "findingId": "DEP-NEW:0bc5a459d5",
+          "code": "DEP-NEW",
+          "inventoryId": "dep-71a7a549150c",
+          "repo": "JARVIS",
+          "subject": "JARVIS vscode-extension/package.json [devDependencies]: typescript",
+          "ownerAction": "approve-or-remove"
+        },
+        {
+          "findingId": "DEP-OCCURRENCE-CHANGED:ededf9cb47",
+          "code": "DEP-OCCURRENCE-CHANGED",
+          "inventoryId": "dep-5f7b4b323344",
+          "repo": "ASAA",
+          "subject": "ASAA deploy/local-prod/docker-compose.yml: image asaa-api:${API_IMAGE_TAG:-0.2.0}",
+          "ownerAction": "refresh-snapshot"
+        }
+      ],
+      "suggestedCovers": [
+        {
+          "inventoryId": "dep-2d1520f798e9"
+        },
+        {
+          "inventoryId": "dep-7c38f197d2bc"
+        },
+        {
+          "inventoryId": "dep-0f8df16afafb"
+        },
+        {
+          "inventoryId": "dep-71a7a549150c"
+        },
+        {
+          "inventoryId": "dep-5f7b4b323344"
+        }
+      ]
     }
   ]
 }
