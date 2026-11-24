@@ -132,6 +132,30 @@
       "recordedAt": "2026-11-22T10:50:57.817Z",
       "prevEntryHash": "a70569a7b040b78ccd507961d2574ffc7ec19e36d41de0b7bf2877b0124436db",
       "entryHash": "7c5433c8dae2a103c7f2d5225fa349c2c705a2e61c32163078cc58bd9d7bbaa0"
+    },
+    {
+      "seq": 12,
+      "file": "identity/realm/asaa-realm.json",
+      "sha256": "591c66838d6c6010e9e0cbe9062e1eb8abf57f6c39144b55d4e663f97f8984bc",
+      "action": "record",
+      "reason": "add asaa-api-docs public PKCE client for local Swagger UI sign-in (E3:D1.10)",
+      "approvalId": null,
+      "actor": "development-agent",
+      "recordedAt": "2026-11-24T11:20:10.851Z",
+      "prevEntryHash": "7c5433c8dae2a103c7f2d5225fa349c2c705a2e61c32163078cc58bd9d7bbaa0",
+      "entryHash": "fe333b27a332447e7da4f089c960cf3e995564c369d3364e0f8486962668a70c"
+    },
+    {
+      "seq": 13,
+      "file": "identity/realm/asaa-realm.json",
+      "sha256": "85670048a24bdcd8c0f0812666eb3d4b1cdee7901bb020ec23a951c0a320cb45",
+      "action": "record",
+      "reason": "realm version 3 so apply-realm imports the asaa-api-docs client into a running Keycloak (E3:D1.10)",
+      "approvalId": null,
+      "actor": "development-agent",
+      "recordedAt": "2026-11-24T11:20:30.082Z",
+      "prevEntryHash": "fe333b27a332447e7da4f089c960cf3e995564c369d3364e0f8486962668a70c",
+      "entryHash": "eedb7a8e607569f336ceb81f2a469ebd644f9298676a7194d08aa7d6405a2499"
     }
   ]
 }
