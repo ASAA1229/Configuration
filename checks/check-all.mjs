@@ -13,6 +13,7 @@ import { run as runSecretReferences } from "./check-secret-references.mjs";
 import { run as runDrift } from "./check-drift.mjs";
 import { defaultEnvironmentName, resolveEnvironment } from "./lib/environments.mjs";
 import { REPORT_SCHEMA, summarize } from "./lib/findings.mjs";
+import { configurationVersion } from "./lib/history.mjs";
 
 export const CHECKS = [
   { id: "schemas", name: "configuration schemas", run: () => runSchemas() },
@@ -37,6 +38,8 @@ export function runAll(envName = defaultEnvironmentName(), now = new Date()) {
     schema: REPORT_SCHEMA,
     generatedAt: now.toISOString(),
     environment: { name: envName, ok: resolved.ok, chain: resolved.chain, errors: environmentErrors },
+    // The configuration version this report was evaluated against, so consumers can record it and roll back to it.
+    configurationVersion: configurationVersion(),
     gate: results.every((r) => r.ok) && resolved.ok ? "pass" : "fail",
     summary,
     checks: results.map(({ lines, findings: f, ...rest }) => ({ ...rest, findingCount: f.length })),
