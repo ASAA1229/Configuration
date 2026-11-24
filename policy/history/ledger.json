@@ -168,6 +168,37 @@
       "recordedAt": "2026-11-24T21:03:35.628Z",
       "prevEntryHash": "eedb7a8e607569f336ceb81f2a469ebd644f9298676a7194d08aa7d6405a2499",
       "entryHash": "e93ec283098a797efb2a2172e209ae48b27cd648487cef067e068841c599d810"
+    },
+    {
+      "seq": 15,
+      "file": "policy/install-import-approvals.json",
+      "sha256": "6eb9050c15db607dd0e7ddfd73fb9e64d5830fdd16c9137dfe0328986e1cfa5f",
+      "action": "approval",
+      "reason": "approval APPROVAL-2026-11-24-001 recorded",
+      "approvalId": "APPROVAL-2026-11-24-001",
+      "actor": "owner",
+      "recordedAt": "2026-11-24T21:09:57.952Z",
+      "prevEntryHash": "e93ec283098a797efb2a2172e209ae48b27cd648487cef067e068841c599d810",
+      "entryHash": "ff1171fd61aeb69b5cb295cc97ed57fa1d4b5b9d731619e6119bb4567eb10fef"
+    },
+    {
+      "seq": 16,
+      "file": "policy/approved-dependencies.json",
+      "sha256": "c47680058c23eca4f7ee455e7a2f71992aa78f699dff597d72ba83c7b311288f",
+      "action": "snapshot",
+      "reason": "dependency snapshot refreshed",
+      "approvalId": "APPROVAL-2026-11-24-001",
+      "actor": "owner",
+      "recordedAt": "2026-11-24T21:15:42.133Z",
+      "details": {
+        "added": 4,
+        "removed": 0,
+        "specChanged": 0,
+        "occurrenceChanged": 1,
+        "entries": 197
+      },
+      "prevEntryHash": "ff1171fd61aeb69b5cb295cc97ed57fa1d4b5b9d731619e6119bb4567eb10fef",
+      "entryHash": "8d7225897196be9e8679a57d57f46ed384eda39620fbce2a1fa48fb63ca28b14"
     }
   ]
 }
