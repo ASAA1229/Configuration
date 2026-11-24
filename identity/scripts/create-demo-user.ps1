@@ -1,5 +1,6 @@
 #requires -Version 7.0
-# Creates or updates the owner's LOCAL DEMO login in the asaa realm (E3:D1.10).
+# Creates or updates the owner's LOCAL DEMO login in the asaa realm (E3:D1.10). TEMPORARY / TEST DATA: the user is named
+# 'Demo Owner TEMPORARY / TEST DATA' and carries the attribute data_class=TEMPORARY_TEST_DATA (E3:D1.11).
 #
 # One demo identity signs in to every project through the shared realm: ASAA (portal and API docs), JARVIS
 # (jarvis-companion), Templates (templates-web, linked by verified email) and Portfolio (portfolio-admin).
@@ -24,6 +25,10 @@ param()
 . (Join-Path $PSScriptRoot 'common.ps1')
 
 $demoGroups = @('asaa-administrators', 'jarvis-owners', 'portfolio-admins', 'templates-owners')
+# Every temporary identity is visibly labelled (owner rule: TEMPORARY / TEST DATA) and carries a machine-readable marker.
+$demoFirstName = 'Demo Owner'
+$demoLastName = 'TEMPORARY / TEST DATA'
+$demoAttributes = @{ data_class = @('TEMPORARY_TEST_DATA') }
 
 function Get-EnvFileValue([string]$Key) {
     if (-not (Test-Path -LiteralPath $script:EnvFile)) { return $null }
@@ -65,11 +70,11 @@ try {
     $existing = (Invoke-KcApi -Token $token -Method GET -Path "/admin/realms/asaa/users?username=$username&exact=true")
     if ($existing -and $existing.Count -gt 0) {
         $userId = $existing[0].id
-        Invoke-KcApi -Token $token -Method PUT -Path "/admin/realms/asaa/users/$userId" -Body @{ email = $email; emailVerified = $true; enabled = $true } | Out-Null
+        Invoke-KcApi -Token $token -Method PUT -Path "/admin/realms/asaa/users/$userId" -Body @{ email = $email; emailVerified = $true; enabled = $true; firstName = $demoFirstName; lastName = $demoLastName; attributes = $demoAttributes } | Out-Null
         Write-Host "OK   demo user '$username' exists; updating it."
     } else {
         # Email is marked verified so Templates SSO can link the local owner account by verified email (local demo only).
-        $body = @{ username = $username; email = $email; firstName = 'Demo'; lastName = 'Owner'; enabled = $true; emailVerified = $true; requiredActions = @('CONFIGURE_TOTP') }
+        $body = @{ username = $username; email = $email; firstName = $demoFirstName; lastName = $demoLastName; attributes = $demoAttributes; enabled = $true; emailVerified = $true; requiredActions = @('CONFIGURE_TOTP') }
         Invoke-KcApi -Token $token -Method POST -Path '/admin/realms/asaa/users' -Body $body | Out-Null
         $userId = (Invoke-KcApi -Token $token -Method GET -Path "/admin/realms/asaa/users?username=$username&exact=true")[0].id
         Write-Host "OK   created demo user '$username'."
