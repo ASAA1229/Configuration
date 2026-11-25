@@ -2,10 +2,10 @@
   "schema": "asaa.configuration.approved-dependencies.v2",
   "description": "Owner-approved baseline of every npm, Python and Docker dependency in the ASAA project repositories at the time of this snapshot. Any later addition or change fails checks/check-dependency-approval.mjs until the owner approves it (policy/install-import-policy.json) and the snapshot is refreshed.",
   "generatedBy": "checks/check-dependency-approval.mjs --snapshot --approval-id",
-  "approvalId": "APPROVAL-2026-11-20-001",
+  "approvalId": "APPROVAL-2026-11-24-001",
   "counts": {
-    "docker": 14,
-    "npm": 173,
+    "docker": 15,
+    "npm": 177,
     "python": 5
   },
   "dependencies": [
@@ -43,6 +43,13 @@
       "manifest": "deploy/docker-compose.yml",
       "section": "image",
       "name": "postgres:16.16@sha256:dd2bf3ce2dc83a81674cf7f217fcfd8a5009a4b325dda5b843bfee82a06cff6f"
+    },
+    {
+      "repo": "ASAA",
+      "ecosystem": "docker",
+      "manifest": "deploy/local-prod/docker-compose.yml",
+      "section": "image",
+      "name": "asaa-api:${API_IMAGE_TAG:-0.2.0}"
     },
     {
       "repo": "ASAA",
@@ -340,6 +347,38 @@
       "section": "devDependencies",
       "name": "typescript",
       "spec": "^5.7.2"
+    },
+    {
+      "repo": "JARVIS",
+      "ecosystem": "npm",
+      "manifest": "vscode-extension/package.json",
+      "section": "devDependencies",
+      "name": "@types/node",
+      "spec": "20.17.10"
+    },
+    {
+      "repo": "JARVIS",
+      "ecosystem": "npm",
+      "manifest": "vscode-extension/package.json",
+      "section": "devDependencies",
+      "name": "@types/vscode",
+      "spec": "1.95.0"
+    },
+    {
+      "repo": "JARVIS",
+      "ecosystem": "npm",
+      "manifest": "vscode-extension/package.json",
+      "section": "devDependencies",
+      "name": "@vscode/vsce",
+      "spec": "3.2.1"
+    },
+    {
+      "repo": "JARVIS",
+      "ecosystem": "npm",
+      "manifest": "vscode-extension/package.json",
+      "section": "devDependencies",
+      "name": "typescript",
+      "spec": "5.7.2"
     },
     {
       "repo": "Portfolio",
