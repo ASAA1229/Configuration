@@ -1,0 +1,237 @@
+{
+  "schema": "asaa.configuration.policy-report.v1",
+  "generatedAt": "2026-11-27T11:29:10.008Z",
+  "environment": {
+    "name": "local",
+    "ok": true,
+    "chain": [
+      "local",
+      "base"
+    ],
+    "errors": []
+  },
+  "configurationVersion": {
+    "commit": "7833c97d720cb791a24eaeaed1c489c40bf558fe",
+    "trackedFilesDirty": false,
+    "ledger": {
+      "entries": 16,
+      "headSeq": 16,
+      "headHash": "8d7225897196be9e8679a57d57f46ed384eda39620fbce2a1fa48fb63ca28b14",
+      "chainOk": true
+    }
+  },
+  "gate": "pass",
+  "summary": {
+    "total": 5,
+    "bySeverity": {
+      "error": 0,
+      "warning": 3,
+      "info": 2
+    },
+    "byCategory": {
+      "approval": 5
+    },
+    "gate": "pass"
+  },
+  "checks": [
+    {
+      "id": "schemas",
+      "name": "configuration schemas",
+      "ok": true,
+      "summary": {
+        "total": 0,
+        "bySeverity": {
+          "error": 0,
+          "warning": 0,
+          "info": 0
+        },
+        "byCategory": {},
+        "gate": "pass"
+      },
+      "findingCount": 0
+    },
+    {
+      "id": "dataLocality",
+      "name": "data locality",
+      "ok": true,
+      "summary": {
+        "total": 0,
+        "bySeverity": {
+          "error": 0,
+          "warning": 0,
+          "info": 0
+        },
+        "byCategory": {},
+        "gate": "pass"
+      },
+      "findingCount": 0
+    },
+    {
+      "id": "dependencyApproval",
+      "name": "dependency approval",
+      "ok": true,
+      "summary": {
+        "total": 5,
+        "bySeverity": {
+          "error": 0,
+          "warning": 3,
+          "info": 2
+        },
+        "byCategory": {
+          "approval": 5
+        },
+        "gate": "pass"
+      },
+      "diff": {
+        "totals": {
+          "approvedEntries": 197,
+          "currentEntries": 197,
+          "approvedRecords": 193,
+          "currentRecords": 193,
+          "duplicateApprovedEntries": 4,
+          "duplicateCurrentEntries": 4,
+          "explainedDelta": {
+            "added": 0,
+            "removed": 0,
+            "occurrence": 0,
+            "specChange": 0
+          },
+          "unexplainedDelta": 0
+        },
+        "added": [],
+        "removed": [],
+        "specChanged": [],
+        "occurrenceChanged": [],
+        "unchanged": 193
+      },
+      "findingCount": 5
+    },
+    {
+      "id": "secretReferences",
+      "name": "secret references",
+      "ok": true,
+      "summary": {
+        "total": 0,
+        "bySeverity": {
+          "error": 0,
+          "warning": 0,
+          "info": 0
+        },
+        "byCategory": {},
+        "gate": "pass"
+      },
+      "findingCount": 0
+    },
+    {
+      "id": "drift",
+      "name": "configuration drift",
+      "ok": true,
+      "summary": {
+        "total": 0,
+        "bySeverity": {
+          "error": 0,
+          "warning": 0,
+          "info": 0
+        },
+        "byCategory": {},
+        "gate": "pass"
+      },
+      "findingCount": 0
+    }
+  ],
+  "findings": [
+    {
+      "check": "dependencyApproval",
+      "id": "APR-RECORD-CONFLICT:a38077f02f",
+      "code": "APR-RECORD-CONFLICT",
+      "category": "approval",
+      "rule": "IIP-1",
+      "severity": "warning",
+      "repo": null,
+      "file": "policy/install-import-policy.json",
+      "inventoryId": null,
+      "subject": "APPROVAL-2026-11-20-001",
+      "message": "approval APPROVAL-2026-11-20-001 differs between install-import-approvals.json and install-import-policy.json (fields: what, why) [awaiting owner decision in REQ-20261122-8F2C2ECE]",
+      "explanation": "The two copies of the same approval record are not identical. The record file is treated as authoritative; the owner decides which wording is correct.",
+      "remediation": null,
+      "ownerAction": "resolve-conflict",
+      "data": {
+        "differingFields": [
+          "what",
+          "why"
+        ],
+        "requestId": "REQ-20261122-8F2C2ECE"
+      }
+    },
+    {
+      "check": "dependencyApproval",
+      "id": "APR-REFERENCE-MISSING:54c2852243",
+      "code": "APR-REFERENCE-MISSING",
+      "category": "approval",
+      "rule": "IIP-1",
+      "severity": "warning",
+      "repo": null,
+      "file": "policy/install-import-policy.json",
+      "inventoryId": null,
+      "subject": "APR-INITIAL-DOCKER@approved tool Docker Desktop",
+      "message": "approved tool Docker Desktop cites approval APR-INITIAL-DOCKER, which has no record in install-import-approvals.json [awaiting owner decision in REQ-20261122-8F2C2ECE]",
+      "explanation": "The approval is referenced but cannot be audited from the record file. It may predate the record file.",
+      "remediation": "the owner adds a record with id, date, what, why and approver for this approval",
+      "ownerAction": "record-approval",
+      "data": {
+        "requestId": "REQ-20261122-8F2C2ECE"
+      }
+    },
+    {
+      "check": "dependencyApproval",
+      "id": "APR-REFERENCE-MISSING:079065e235",
+      "code": "APR-REFERENCE-MISSING",
+      "category": "approval",
+      "rule": "IIP-1",
+      "severity": "warning",
+      "repo": null,
+      "file": "policy/install-import-policy.json",
+      "inventoryId": null,
+      "subject": "APR-INITIAL-KEYCLOAK@approved image quay.io/keycloak/keycloak:26.8.1@sha256:3f3c5f8e03c614774b4bd9173b88391fefa4153bfc010d8012d59ad825377332",
+      "message": "approved image quay.io/keycloak/keycloak:26.8.1@sha256:3f3c5f8e03c614774b4bd9173b88391fefa4153bfc010d8012d59ad825377332 cites approval APR-INITIAL-KEYCLOAK, which has no record in install-import-approvals.json [awaiting owner decision in REQ-20261122-8F2C2ECE]",
+      "explanation": "The approval is referenced but cannot be audited from the record file. It may predate the record file.",
+      "remediation": "the owner adds a record with id, date, what, why and approver for this approval",
+      "ownerAction": "record-approval",
+      "data": {
+        "requestId": "REQ-20261122-8F2C2ECE"
+      }
+    },
+    {
+      "check": "dependencyApproval",
+      "id": "APR-REQUEST-PENDING:ca76a500cd",
+      "code": "APR-REQUEST-PENDING",
+      "category": "approval",
+      "rule": "IIP-1",
+      "severity": "info",
+      "repo": null,
+      "file": "policy/approval-requests.json",
+      "inventoryId": null,
+      "subject": "REQ-20261122-8F2C2ECE",
+      "message": "discrepancy request REQ-20261122-8F2C2ECE (3 open item(s)) is waiting for an owner decision",
+      "explanation": null,
+      "remediation": null,
+      "ownerAction": "decide-request"
+    },
+    {
+      "check": "dependencyApproval",
+      "id": "APR-REQUEST-PENDING:4b9d449038",
+      "code": "APR-REQUEST-PENDING",
+      "category": "approval",
+      "rule": "IIP-1",
+      "severity": "info",
+      "repo": null,
+      "file": "policy/approval-requests.json",
+      "inventoryId": null,
+      "subject": "REQ-20261124-99CA4231",
+      "message": "approval request REQ-20261124-99CA4231 (5 open item(s)) is waiting for an owner decision",
+      "explanation": null,
+      "remediation": null,
+      "ownerAction": "decide-request"
+    }
+  ]
+}
